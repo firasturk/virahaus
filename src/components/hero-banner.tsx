@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import CursorReveal from "./cursor-reveal";
+import ScrollReveal from "./scroll-reveal";
 import styles from "./hero-banner.module.css";
 
 /*
@@ -161,20 +162,23 @@ export default function HeroBanner() {
             <span className={styles.scrollTick} />
           </div>
 
-          <article className={styles.card}>
-            <Image
-              src={CARD_IMAGE}
-              alt=""
-              width={880}
-              height={588}
-              className={styles.cardImage}
-            />
-            <p className={styles.cardKicker}>EcoStove</p>
-            <p className={styles.cardTitle}>Heat for Life</p>
-            <button className={styles.cardButton} type="button" aria-label="View EcoStove">
-              <GridGlyph />
-            </button>
-          </article>
+          {/* Hidden on first paint; enters once the visitor scrolls down. */}
+          <ScrollReveal>
+            <article className={styles.card}>
+              <Image
+                src={CARD_IMAGE}
+                alt=""
+                width={880}
+                height={588}
+                className={styles.cardImage}
+              />
+              <p className={styles.cardKicker}>EcoStove</p>
+              <p className={styles.cardTitle}>Heat for Life</p>
+              <button className={styles.cardButton} type="button" aria-label="View EcoStove">
+                <GridGlyph />
+              </button>
+            </article>
+          </ScrollReveal>
         </div>
       </CursorReveal>
     </section>

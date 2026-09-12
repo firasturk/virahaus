@@ -267,6 +267,26 @@
   border-radius: 2.7778cqw; /* 40px */
   background: #d7d8d6;
   overflow: hidden;
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Resting state before the first scroll: sunk and faded, ready to rise. */
+[data-revealed="false"] .card {
+  opacity: 0;
+  transform: translateY(2.8cqw) scale(0.97);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: opacity 0.3s ease;
+  }
+
+  [data-revealed="false"] .card {
+    transform: none;
+  }
 }
 
 /* 437.32 x 291.54 anchored bottom-left, so it bleeds past the card's right edge. */
