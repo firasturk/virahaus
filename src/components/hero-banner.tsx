@@ -8,17 +8,18 @@ import styles from "./hero-banner.module.css";
 /*
  * Assets
  * ------
- * hero-bare.jpg, the video and its poster are the real supplied assets.
+ * hero-bare.jpg, the wordmark, the video and its poster are the real supplied
+ * assets.
  *
- * The Figma frame's remaining images live behind figma.com, which this
- * environment's egress policy blocks, so two are still stand-ins. Each is named
- * .PLACEHOLDER so it is obvious in the tree which files need the real export:
+ * One Figma image is still a stand-in: it lives behind figma.com, which this
+ * environment's egress policy blocks. It is named .PLACEHOLDER so it is obvious
+ * in the tree which file still needs the real export:
  *
  *   card-moss.PLACEHOLDER.jpg  -> Figma node 17001:89 (the EcoStove card image)
- *   the ViraHaus wordmark      -> Figma node 26002:10 (rendered as text below)
  */
 const BARE_STILL = "/media/hero-bare.jpg";
 const CARD_IMAGE = "/media/card-moss.PLACEHOLDER.jpg";
+const LOGO = "/media/VIRA-HAUS-logo.png";
 
 const ALIVE_POSTER = "/media/hero-alive-poster.jpg";
 const ALIVE_WEBM = "/media/hero-alive.webm";
@@ -136,8 +137,15 @@ export default function HeroBanner() {
             <span className={styles.gridLine} style={{ left: "calc(100% - 1px)" }} />
           </div>
 
-          {/* TODO: replace with the exported ViraHaus wordmark (node 26002:10). */}
-          <span className={styles.logo}>ViraHaus</span>
+          {/* 561x120 wordmark, drawn white on transparent — sits straight on the plate. */}
+          <Image
+            src={LOGO}
+            alt="ViraHaus"
+            width={561}
+            height={120}
+            priority
+            className={styles.logo}
+          />
 
           <nav className={styles.nav}>
             <a className={styles.navHome} href="#">

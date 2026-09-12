@@ -100,13 +100,12 @@ feathered mask absorbs — there is no visible seam at the reveal edge.
 ### Placeholders that still need the real export
 
 The Figma assets are served from `www.figma.com`, which this build environment's
-network policy blocks, so three are still stand-ins. Each blocked file is named
+network policy blocks, so two are still stand-ins. Each blocked file is named
 `.PLACEHOLDER` so it is obvious in the tree:
 
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |
 | `card-moss.PLACEHOLDER.jpg` | `17001:89` | The EcoStove card image. Currently a moss crop from the video. |
-| ViraHaus wordmark | `26002:10` | Rendered as plain text in `hero-banner.tsx`. Not redrawn — the real mark is an image. |
 | Icon SVGs | grid / play / burger | Redrawn from the reference screenshot in `hero-banner.tsx`; approximations, not the originals. |
 
 To resolve: export the assets from Figma and upload them into `public/media/`

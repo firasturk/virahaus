@@ -88,17 +88,19 @@
 
 /* --- Masthead --- */
 
+/*
+ * Figma's logo is a 115 x 25 box (node 26002:10). The supplied wordmark is
+ * 561 x 120, a slightly taller ratio, so height is pinned to the artboard's 25px
+ * and the width follows to keep the mark undistorted.
+ */
 .logo {
   position: absolute;
   left: 2.292%; /* 33 */
   top: 3.827%; /* 31 */
+  width: auto;
   height: 1.7361cqw; /* 25px */
-  display: flex;
-  align-items: center;
-  gap: 0.4861cqw;
-  font-size: 1.3889cqw; /* 20px */
-  letter-spacing: -0.0347cqw;
-  color: #fff;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .nav {
@@ -515,8 +517,7 @@
   }
 
   .logo {
-    font-size: 1.125rem;
-    letter-spacing: normal;
+    height: 1.5rem;
   }
 
   .burger {
