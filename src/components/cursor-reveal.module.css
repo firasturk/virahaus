@@ -1,0 +1,94 @@
+/*
+ * Geometry note
+ * -------------
+ * `.reveal` is a fixed-size square box carrying a *static* radial-gradient mask.
+ * The mask never changes, so it is rasterised exactly once; the box is then moved
+ * and scaled purely with `transform`, which the compositor handles on the GPU.
+ *
+ * Because the box moves, its child would move with it — so `.inner` applies the
+ * inverse transform, pinning the top layer to the stage while the window over it
+ * travels. Both transforms are written directly from a rAF loop; React never
+ * re-renders during pointer movement.
+ */
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+.bottom {
+  z-index: 0;
+}
+
+.reveal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: var(--reveal-box, 0px);
+  height: var(--reveal-box, 0px);
+  opacity: 0;
+  visibility: hidden;
+  /* The masked copy is decorative; clicks belong to the bottom layer / overlay. */
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-mask-image: var(--reveal-mask);
+  mask-image: var(--reveal-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--stage-w, 0px);
+  height: var(--stage-h, 0px);
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+/*
+ * Fallbacks for devices with no fine pointer. `data-mode` is set after mount, so
+ * the server-rendered markup is the resting state and nothing depends on JS to
+ * be legible.
+ */
+.stage[data-mode="top"] .reveal {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  will-change: auto;
+}
+
+.stage[data-mode="top"] .inner {
+  width: 100%;
+  height: 100%;
+  transform: none;
+  will-change: auto;
+}
+
+.stage[data-mode="bottom"] .reveal {
+  display: none;
+}
