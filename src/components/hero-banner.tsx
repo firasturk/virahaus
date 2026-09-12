@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 
 import CursorReveal from "./cursor-reveal";
 import ScrollReveal from "./scroll-reveal";
@@ -59,6 +60,32 @@ function BurgerGlyph() {
     <svg viewBox="0 0 32 8" fill="none" aria-hidden>
       <path d="M0 1h32M0 7h32" stroke="currentColor" strokeWidth="1.4" />
     </svg>
+  );
+}
+
+/*
+ * Splits a line into per-glyph spans so each can rise from its own depth. The
+ * index feeds the CSS `--i` variable; a caller passes `offset` so a second line
+ * continues the cascade instead of restarting it.
+ */
+function Glyphs({ text, offset = 0 }: { text: string; offset?: number }) {
+  return (
+    <>
+      {Array.from(text).map((ch, i) =>
+        ch === " " ? (
+          <span key={i} className={styles.space} aria-hidden />
+        ) : (
+          <span
+            key={i}
+            className={styles.letter}
+            style={{ "--i": offset + i } as CSSProperties}
+            aria-hidden
+          >
+            {ch}
+          </span>
+        ),
+      )}
+    </>
   );
 }
 
@@ -132,15 +159,17 @@ export default function HeroBanner() {
             <BurgerGlyph />
           </button>
 
-          <h1 className={styles.headline}>
-            Find your
+          <h1 className={styles.headline} aria-label="Find your inner green">
+            <Glyphs text="Find your" />
             <br />
-            inner green
+            <Glyphs text="inner green" offset={9} />
           </h1>
 
           <p className={styles.copy}>
-            Nurturing green spaces, cultivating sustainable solutions, and inspiring a
-            greener tomorrow for all.
+            <span className={styles.copyInner}>
+              Nurturing green spaces, cultivating sustainable solutions, and inspiring a
+              greener tomorrow for all.
+            </span>
           </p>
 
           <button className={styles.pill} type="button">

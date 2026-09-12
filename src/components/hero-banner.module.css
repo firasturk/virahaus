@@ -349,6 +349,126 @@
 }
 
 /*
+ * Entrance choreography
+ * ---------------------
+ * Copied from the "Daily Hero 10" prototype (Frame1 -> Frame2, Smart Animate).
+ * Three moves make up its vocabulary:
+ *
+ *   1. Navigation slides down from above the frame. Every item shares one
+ *      duration but travels a different distance — logo 110px, centre menu
+ *      220px, right-hand items 360px in a 1080px frame — so they arrive as a
+ *      parallax stagger rather than a queue. Reproduced here at 0.75 scale.
+ *   2. Display type rises letter by letter, each glyph starting deeper than
+ *      the one before it and fading in, all on the same clock. The cascade
+ *      comes from distance, not from delay.
+ *   3. Secondary text drops into a clipping mask from above.
+ *
+ * Every timing is a variable on .stage so the numbers can be tuned against the
+ * prototype's exact reactions without touching the rules below.
+ */
+
+.stage {
+  --intro-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --intro-nav: 1.15s;
+  --intro-type: 1.3s;
+  --intro-copy: 1.05s;
+  --intro-ui: 0.95s;
+  --intro-rails: 1.4s;
+}
+
+@keyframes introDrop {
+  from { transform: translateY(var(--from)); }
+  to { transform: translateY(0); }
+}
+
+@keyframes introRise {
+  from { opacity: 0; transform: translateY(var(--from)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes introMaskDrop {
+  from { transform: translateY(-110%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes introFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes introGrow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+/* 1. Navigation — same clock, three travel distances. */
+.logo {
+  --from: -5.73cqw; /* 110px * 0.75 */
+  animation: introDrop var(--intro-nav) var(--intro-ease) both;
+}
+
+.nav {
+  --from: -11.46cqw; /* 220px * 0.75 */
+  animation: introDrop var(--intro-nav) var(--intro-ease) both;
+}
+
+.about,
+.burger {
+  --from: -18.75cqw; /* 360px * 0.75 */
+  animation: introDrop var(--intro-nav) var(--intro-ease) both;
+}
+
+/* 2. Display type — each glyph starts lower than the last. */
+.letter {
+  display: inline-block;
+  --from: calc(1.6cqw + var(--i) * 0.5cqw);
+  animation: introRise var(--intro-type) var(--intro-ease) 0.15s both;
+}
+
+.space {
+  display: inline-block;
+  width: 0.28em;
+}
+
+/* 3. Secondary text — drops into its own clip. */
+.copy {
+  overflow: hidden;
+}
+
+.copyInner {
+  display: block;
+  animation: introMaskDrop var(--intro-copy) var(--intro-ease) 0.45s both;
+}
+
+/* Supporting UI settles in after the type. */
+.pill {
+  --from: 2cqw;
+  animation: introRise var(--intro-ui) var(--intro-ease) 0.7s both;
+}
+
+.play {
+  --from: 2cqw;
+  animation: introRise var(--intro-ui) var(--intro-ease) 0.85s both;
+}
+
+.gridLine,
+.scrollLine {
+  transform-origin: 50% 0;
+  animation: introGrow var(--intro-rails) var(--intro-ease) 0.1s both;
+}
+
+.scrollLabel,
+.scrollTick {
+  animation: introFade 0.8s ease 1.1s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage :is(.logo, .nav, .about, .burger, .letter, .copyInner, .pill, .play, .gridLine, .scrollLine, .scrollLabel, .scrollTick) {
+    animation: none;
+  }
+}
+
+/*
  * Below the artboard's proportions the absolute composition stops working, so
  * the overlay reflows into a single column and the decorative rules drop out.
  * The card keeps `position: relative` — going static would detach its absolutely
