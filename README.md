@@ -92,23 +92,23 @@ motion (p95 16.7ms), and the loop parks itself at **0 frames** when nothing move
 `public/media/` — the video was supplied as HEVC, unplayable in Chrome and
 Firefox, so it ships as VP9 (490KB) with an H.264 fallback (956KB), audio stripped.
 
+`hero-bare.jpg` is the real bare-driftwood plate (2048 × 1154). It was checked
+against the video by blending the two and by a difference map: the silhouettes
+register to within a few pixels along the branch's underside, an offset the
+feathered mask absorbs — there is no visible seam at the reveal edge.
+
 ### Placeholders that still need the real export
 
 The Figma assets are served from `www.figma.com`, which this build environment's
-network policy blocks, so four of them are stand-ins. Each blocked file is named
+network policy blocks, so three are still stand-ins. Each blocked file is named
 `.PLACEHOLDER` so it is obvious in the tree:
 
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |
-| `hero-bare.PLACEHOLDER.jpg` | `26002:3` | The bare driftwood plate. Currently a desaturated video frame, which is why the hero reads grey rather than warm taupe. |
 | `card-moss.PLACEHOLDER.jpg` | `17001:89` | The EcoStove card image. Currently a moss crop from the video. |
 | ViraHaus wordmark | `26002:10` | Rendered as plain text in `hero-banner.tsx`. Not redrawn — the real mark is an image. |
 | Icon SVGs | grid / play / burger | Redrawn from the reference screenshot in `hero-banner.tsx`; approximations, not the originals. |
 
-To resolve: either allow `figma.com` in the environment's network policy, or
-export the four assets from Figma and drop them into `public/media/`, updating the
+To resolve: export the assets from Figma and upload them into `public/media/`
+(GitHub's *Add file → Upload files* on the branch works), then update the
 constants at the top of `src/components/hero-banner.tsx`.
-
-Note the bare plate is placed in Figma at 1785 × 1190 from (-342, -237) — a tighter
-crop than the video's framing. When the real plate lands, check that it still
-registers with the video, or the reveal will show a jump at the mask edge.

@@ -6,18 +6,16 @@ import styles from "./hero-banner.module.css";
 /*
  * Assets
  * ------
- * The Figma frame's own images live behind figma.com, which this environment's
- * egress policy blocks, so three of them are stand-ins. Each is named
- * .PLACEHOLDER so it is obvious in the tree which files still need the real
- * export dropped in:
+ * hero-bare.jpg, the video and its poster are the real supplied assets.
  *
- *   hero-bare.PLACEHOLDER.jpg  -> Figma node 26002:3  (the bare driftwood plate)
+ * The Figma frame's remaining images live behind figma.com, which this
+ * environment's egress policy blocks, so two are still stand-ins. Each is named
+ * .PLACEHOLDER so it is obvious in the tree which files need the real export:
+ *
  *   card-moss.PLACEHOLDER.jpg  -> Figma node 17001:89 (the EcoStove card image)
  *   the ViraHaus wordmark      -> Figma node 26002:10 (rendered as text below)
- *
- * The video and its poster are the real supplied assets.
  */
-const BARE_STILL = "/media/hero-bare.PLACEHOLDER.jpg";
+const BARE_STILL = "/media/hero-bare.jpg";
 const CARD_IMAGE = "/media/card-moss.PLACEHOLDER.jpg";
 
 const ALIVE_POSTER = "/media/hero-alive-poster.jpg";
