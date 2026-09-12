@@ -1,95 +1,184 @@
 import Image from "next/image";
 
 import CursorReveal from "./cursor-reveal";
+import styles from "./hero-banner.module.css";
 
 /*
- * TODO: replace with the real bare-driftwood still. Only the video reached the
- * session, so this stand-in is a desaturated frame of it — the reveal mechanic
- * is correct, the resting image is not.
+ * Assets
+ * ------
+ * The Figma frame's own images live behind figma.com, which this environment's
+ * egress policy blocks, so three of them are stand-ins. Each is named
+ * .PLACEHOLDER so it is obvious in the tree which files still need the real
+ * export dropped in:
+ *
+ *   hero-bare.PLACEHOLDER.jpg  -> Figma node 26002:3  (the bare driftwood plate)
+ *   card-moss.PLACEHOLDER.jpg  -> Figma node 17001:89 (the EcoStove card image)
+ *   the ViraHaus wordmark      -> Figma node 26002:10 (rendered as text below)
+ *
+ * The video and its poster are the real supplied assets.
  */
 const BARE_STILL = "/media/hero-bare.PLACEHOLDER.jpg";
+const CARD_IMAGE = "/media/card-moss.PLACEHOLDER.jpg";
 
 const ALIVE_POSTER = "/media/hero-alive-poster.jpg";
 const ALIVE_WEBM = "/media/hero-alive.webm";
 const ALIVE_MP4 = "/media/hero-alive.mp4";
 
 /*
- * A halo in the background tone, rather than a full scrim. It keeps the type
- * legible where it crosses the branch without washing out the reveal underneath.
+ * The frame's icons are exported SVGs on the same blocked host, so these are
+ * redrawn from the reference screenshot and are approximations, not the
+ * originals. Replace them once the exports are available.
  */
-const HALO = {
-  textShadow:
-    "0 0 18px rgba(236,234,230,0.92), 0 0 44px rgba(236,234,230,0.75), 0 0 90px rgba(236,234,230,0.5)",
-};
+function GridGlyph() {
+  return (
+    <svg viewBox="0 0 11 11" fill="none" aria-hidden>
+      {[0, 1].map((row) =>
+        [0, 1].map((col) => (
+          <circle
+            key={`${row}-${col}`}
+            cx={2.2 + col * 6.6}
+            cy={2.2 + row * 6.6}
+            r="1.6"
+            fill="currentColor"
+          />
+        )),
+      )}
+    </svg>
+  );
+}
+
+function PlayGlyph() {
+  return (
+    <svg viewBox="0 0 17 17" fill="none" aria-hidden>
+      <path d="M4.8 1.9 14.4 8.5 4.8 15.1Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function BurgerGlyph() {
+  return (
+    <svg viewBox="0 0 32 8" fill="none" aria-hidden>
+      <path d="M0 1h32M0 7h32" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  );
+}
 
 export default function HeroBanner() {
   return (
-    <CursorReveal
-      className="h-[100svh] min-h-[560px] w-full bg-[#c9c5bf]"
-      revealSize={460}
-      feather={0.62}
-      followSpeed={0.52}
-      inertia={0.42}
-      enterDuration={950}
-      exitDuration={700}
-      defaultRevealSize={0}
-      organic={0.7}
-      touchFallback="top"
-      bottomLayer={
-        <Image
-          src={BARE_STILL}
-          alt="A weathered driftwood branch suspended against a pale grey field."
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-      }
-      topLayer={
-        <video
-          className="h-full w-full object-cover"
-          poster={ALIVE_POSTER}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src={ALIVE_WEBM} type="video/webm" />
-          <source src={ALIVE_MP4} type="video/mp4" />
-        </video>
-      }
-    >
-      <div className="pointer-events-none flex h-full flex-col justify-between p-6 text-[#16140f] sm:p-10 lg:p-14">
-        <span className="text-sm font-medium tracking-[0.42em] uppercase" style={HALO}>
-          Virahaus
-        </span>
-
-        <div className="max-w-3xl">
-          <h1
-            className="text-[clamp(2.4rem,7.4vw,6rem)] leading-[0.94] font-light tracking-[-0.03em] text-balance"
-            style={HALO}
+    <section className={styles.hero}>
+      <CursorReveal
+        className={styles.stage}
+        revealSize={460}
+        feather={0.62}
+        followSpeed={0.52}
+        inertia={0.42}
+        enterDuration={950}
+        exitDuration={700}
+        defaultRevealSize={0}
+        organic={0.7}
+        touchFallback="top"
+        bottomLayer={
+          <Image
+            src={BARE_STILL}
+            alt="A weathered driftwood branch suspended against a pale field."
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        }
+        topLayer={
+          <video
+            className="h-full w-full object-cover"
+            poster={ALIVE_POSTER}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
           >
-            Nothing here
+            <source src={ALIVE_WEBM} type="video/webm" />
+            <source src={ALIVE_MP4} type="video/mp4" />
+          </video>
+        }
+      >
+        <div className={styles.overlay}>
+          <div className={styles.grid} aria-hidden>
+            <span className={styles.gridLine} style={{ left: "0%" }} />
+            <span className={styles.gridLine} style={{ left: "25%" }} />
+            <span className={styles.gridLine} style={{ left: "75%" }} />
+            <span className={styles.gridLine} style={{ left: "calc(100% - 1px)" }} />
+          </div>
+
+          {/* TODO: replace with the exported ViraHaus wordmark (node 26002:10). */}
+          <span className={styles.logo}>ViraHaus</span>
+
+          <nav className={styles.nav}>
+            <a className={styles.navHome} href="#">
+              Home
+            </a>
+            <a className={styles.navShop} href="#">
+              shop
+            </a>
+            <a className={styles.navContact} href="#">
+              Contact
+            </a>
+          </nav>
+
+          <a className={styles.about} href="#">
+            About
+          </a>
+
+          <button className={styles.burger} type="button" aria-label="Open menu">
+            <BurgerGlyph />
+          </button>
+
+          <h1 className={styles.headline}>
+            Find your
             <br />
-            is as dead
-            <br />
-            as it looks.
+            inner green
           </h1>
 
-          <p
-            className="mt-7 max-w-md text-base leading-relaxed opacity-80 sm:text-lg"
-            style={HALO}
-          >
-            Every surface we work with is already carrying something. We build so it shows.
+          <p className={styles.copy}>
+            Nurturing green spaces, cultivating sustainable solutions, and inspiring a
+            greener tomorrow for all.
           </p>
-        </div>
 
-        <span className="text-xs tracking-[0.24em] uppercase opacity-60" style={HALO}>
-          <span className="hidden sm:inline">Move your cursor</span>
-          <span className="sm:hidden">Scroll</span>
-        </span>
-      </div>
-    </CursorReveal>
+          <button className={styles.pill} type="button">
+            <span className={styles.pillIcon}>
+              <GridGlyph />
+            </span>
+            Our Products
+          </button>
+
+          <button className={styles.play} type="button" aria-label="Play showreel">
+            <span className={styles.playInner}>
+              <PlayGlyph />
+            </span>
+          </button>
+
+          <div className={styles.scrollRail} aria-hidden>
+            <span className={styles.scrollLine} />
+            <span className={styles.scrollLabel}>Scroll</span>
+            <span className={styles.scrollTick} />
+          </div>
+
+          <article className={styles.card}>
+            <Image
+              src={CARD_IMAGE}
+              alt=""
+              width={880}
+              height={588}
+              className={styles.cardImage}
+            />
+            <p className={styles.cardKicker}>EcoStove</p>
+            <p className={styles.cardTitle}>Heat for Life</p>
+            <button className={styles.cardButton} type="button" aria-label="View EcoStove">
+              <GridGlyph />
+            </button>
+          </article>
+        </div>
+      </CursorReveal>
+    </section>
   );
 }

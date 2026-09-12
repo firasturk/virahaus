@@ -1,0 +1,456 @@
+/*
+ * Reproduction of the Figma frame "home" (1440 x 810), node 17001:48.
+ *
+ * The frame is a fixed-size composition, so every size is expressed in `cqw`
+ * (1cqw = 1% of the stage width) and every position as a percentage of the
+ * 1440 x 810 grid. At 1440px wide the result is pixel-exact; at any other width
+ * the whole composition scales proportionally, exactly as the artboard does.
+ * Divide a Figma px value by 14.4 to get its cqw equivalent.
+ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  background: #454640;
+}
+
+.stage {
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-lexend), system-ui, sans-serif;
+}
+
+/* --- Structural grid: vertical rules at x = 0, 360, 1080, 1440 --- */
+
+.grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gridLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* --- Centre rail: hairline, rotated SCROLL label, closing tick --- */
+
+.scrollRail {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  pointer-events: none;
+}
+
+.scrollLine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 79.561%; /* 644.447 / 810 */
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.scrollLabel {
+  position: absolute;
+  left: 0;
+  top: 82.222%; /* 666 / 810 */
+  transform: rotate(90deg);
+  transform-origin: 0 0;
+  font-size: 0.8333cqw; /* 12px */
+  font-weight: 200;
+  letter-spacing: 0.3917cqw; /* 5.64px */
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.scrollTick {
+  position: absolute;
+  left: 0;
+  top: 94.247%; /* 763.4 / 810 */
+  width: 1px;
+  height: 5.568%; /* 45.1 / 810 */
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* --- Masthead --- */
+
+.logo {
+  position: absolute;
+  left: 2.292%; /* 33 */
+  top: 3.827%; /* 31 */
+  height: 1.7361cqw; /* 25px */
+  display: flex;
+  align-items: center;
+  gap: 0.4861cqw;
+  font-size: 1.3889cqw; /* 20px */
+  letter-spacing: -0.0347cqw;
+  color: #fff;
+}
+
+.nav {
+  position: absolute;
+  left: 18.819%; /* 271 */
+  top: 4.037%; /* cap-top 38 */
+  display: flex;
+  font-size: 0.9722cqw; /* 14px */
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Figma spaces these by absolute x, not by a gap; widths reproduce that. */
+.navHome {
+  width: 11.875cqw; /* 171px to the next item */
+  font-weight: 700;
+  color: #fff;
+}
+
+.navShop {
+  width: 11.25cqw; /* 162px to the next item */
+  color: #753319;
+}
+
+.navContact {
+  color: #753319;
+}
+
+.about {
+  position: absolute;
+  left: 90.429%; /* 1302.18 */
+  top: 3.718%; /* cap-top 35.46 */
+  font-size: 0.9722cqw;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.burger {
+  position: absolute;
+  left: 96.106%; /* 1383.93 */
+  top: 4.378%;
+  width: 2.2271cqw; /* 32.07px */
+  height: 0.527cqw; /* 7.589px */
+}
+
+/* --- Headline --- */
+
+.headline {
+  position: absolute;
+  left: 5.694%; /* 82 */
+  top: 32.032%; /* cap-top 273 */
+  margin: 0;
+  font-family: var(--font-lexend-exa), var(--font-lexend), sans-serif;
+  font-size: 3.6111cqw; /* 52px */
+  font-weight: 400;
+  line-height: 1.1923; /* 62px between cap-tops */
+  letter-spacing: -0.4333cqw; /* -6.24px */
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* --- Supporting copy and primary action --- */
+
+.copy {
+  position: absolute;
+  left: 32.083%; /* 462 */
+  top: 21.742%; /* cap-top 181.35 */
+  margin: 0;
+  width: 15.625cqw; /* 225px */
+  font-size: 1.1111cqw; /* 16px */
+  line-height: 1.4;
+  color: #753319;
+}
+
+.pill {
+  position: absolute;
+  left: 32.083%; /* 462 */
+  top: 37.821%; /* 306.35 */
+  box-sizing: border-box;
+  width: 12.3611cqw; /* 178px */
+  height: 3.8889cqw; /* 56px */
+  display: flex;
+  align-items: center;
+  gap: 0.5556cqw; /* 8px */
+  padding: 0.5556cqw 1.3889cqw 0.5556cqw 0.5556cqw; /* 8 / 20 */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  background: none;
+  color: #fff;
+  font: inherit;
+  font-size: 1.1111cqw; /* 16px */
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.pill:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.pillIcon {
+  display: grid;
+  place-items: center;
+  width: 2.7778cqw; /* 40px */
+  height: 2.7778cqw;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  flex: none;
+}
+
+.pillIcon svg {
+  width: 0.7639cqw; /* 11px */
+  height: 0.7639cqw;
+}
+
+/* --- Play control --- */
+
+.play {
+  position: absolute;
+  left: 8.542%; /* 123 */
+  top: 59.877%; /* 485 */
+  display: grid;
+  place-items: center;
+  width: 8.75cqw; /* 126px */
+  height: 8.75cqw;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: border-color 0.4s ease;
+}
+
+.play:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.playInner {
+  display: grid;
+  place-items: center;
+  width: 5.2778cqw; /* 76px */
+  height: 5.2778cqw;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.playInner svg {
+  width: 1.1806cqw; /* 17px */
+  height: 1.1806cqw;
+  color: #454640;
+}
+
+/* --- Product card --- */
+
+.card {
+  position: absolute;
+  left: 77.5%; /* 1116 */
+  top: 58.889%; /* 477 */
+  width: 20.5556cqw; /* 296px */
+  height: 19.4444cqw; /* 280px */
+  border-radius: 2.7778cqw; /* 40px */
+  background: #d7d8d6;
+  overflow: hidden;
+}
+
+/* 437.32 x 291.54 anchored bottom-left, so it bleeds past the card's right edge. */
+.cardImage {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 30.3692cqw;
+  height: 13.9cqw;
+  object-fit: cover;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 30%);
+}
+
+.cardKicker,
+.cardTitle {
+  position: absolute;
+  left: 2.8292cqw; /* 40.74px */
+  margin: 0;
+  color: #474842;
+}
+
+.cardKicker {
+  top: 2.7833cqw; /* cap-top 45.24px */
+  font-size: 1.1111cqw; /* 16px */
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: -0.0222cqw;
+}
+
+.cardTitle {
+  top: 4.8111cqw; /* cap-top 73.74px */
+  font-family: var(--font-lexend-exa), var(--font-lexend), sans-serif;
+  font-size: 1.6667cqw; /* 24px */
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.1667cqw; /* -2.4px */
+}
+
+.cardButton {
+  position: absolute;
+  right: 1.3889cqw; /* 20px */
+  bottom: 1.3889cqw;
+  display: grid;
+  place-items: center;
+  width: 3.75cqw; /* 54px */
+  height: 3.75cqw;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.cardButton svg {
+  width: 0.7639cqw; /* 11px */
+  height: 0.7639cqw;
+  color: #454842;
+}
+
+/*
+ * Below the artboard's proportions the absolute composition stops working, so
+ * the overlay reflows into a single column and the decorative rules drop out.
+ * The card keeps `position: relative` — going static would detach its absolutely
+ * positioned children and let them escape to the stage.
+ */
+@media (max-width: 767px) {
+  .stage {
+    aspect-ratio: auto;
+    min-height: 100svh;
+  }
+
+  /* The fallback layer plays the lit video here, so the type needs a ground. */
+  .overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    min-height: 100svh;
+    padding: 1.5rem;
+    background: linear-gradient(
+      to bottom,
+      rgba(28, 30, 26, 0.55) 0%,
+      rgba(28, 30, 26, 0.15) 28%,
+      rgba(28, 30, 26, 0.35) 58%,
+      rgba(28, 30, 26, 0.8) 100%
+    );
+  }
+
+  .grid,
+  .scrollRail,
+  .nav,
+  .about,
+  .play {
+    display: none;
+  }
+
+  .logo,
+  .headline,
+  .copy,
+  .pill {
+    position: static;
+    width: auto;
+    height: auto;
+  }
+
+  .logo {
+    font-size: 1.125rem;
+    letter-spacing: normal;
+  }
+
+  .burger {
+    top: 1.75rem;
+    right: 1.5rem;
+    left: auto;
+    width: 2rem;
+    height: 0.5rem;
+  }
+
+  .headline {
+    margin-top: auto;
+    font-size: clamp(2.25rem, 11.5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+  }
+
+  .copy {
+    width: min(30ch, 100%);
+    font-size: 1rem;
+    color: #d99b74;
+  }
+
+  .pill {
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  .pillIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .pillIcon svg,
+  .cardButton svg {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+
+  .card {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 22rem;
+    height: 11rem;
+    margin-top: 0.5rem;
+    border-radius: 1.75rem;
+  }
+
+  .cardImage {
+    width: 148%;
+    height: 65%;
+  }
+
+  .cardKicker {
+    top: 1.5rem;
+    left: 1.6rem;
+    font-size: 0.95rem;
+    letter-spacing: normal;
+  }
+
+  .cardTitle {
+    top: 2.9rem;
+    left: 1.6rem;
+    font-size: 1.5rem;
+    letter-spacing: -0.06em;
+  }
+
+  .cardButton {
+    right: 1.1rem;
+    bottom: 1.1rem;
+    width: 3rem;
+    height: 3rem;
+  }
+}

@@ -1,27 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Lexend, Lexend_Exa, Rozha_One } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lexend = Lexend({
+  variable: "--font-lexend",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const lexendExa = Lexend_Exa({
+  variable: "--font-lexend-exa",
   subsets: ["latin"],
+});
+
+const rozhaOne = Rozha_One({
+  variable: "--font-rozha-one",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
-  title: "Virahaus",
-  description: "Nothing here is as dead as it looks.",
+  title: "ViraHaus",
+  description:
+    "Nurturing green spaces, cultivating sustainable solutions, and inspiring a greener tomorrow for all.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${lexend.variable} ${lexendExa.variable} ${rozhaOne.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

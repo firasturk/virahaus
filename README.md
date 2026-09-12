@@ -1,8 +1,12 @@
-# Virahaus
+# ViraHaus
 
-Hero banner built around a cursor-driven reveal: a bare driftwood branch at rest,
-the same branch alive — moss, and a blue dart frog walking it — revealed through a
-soft organic mask that follows the cursor.
+Hero banner implementing the Figma frame **`home`** (node `17001:48`) from
+*Daily Hero 2 — Arkkhe (Copy)*, built around a cursor-driven reveal: a bare
+driftwood branch at rest, the same branch alive — moss, and a blue dart frog
+walking it — revealed through a soft organic mask that follows the cursor.
+
+The headline is *"Find your inner green"*, so the reveal is the idea: the green
+is inside the dead wood, and the cursor is what finds it.
 
 ## Running it
 
@@ -11,11 +15,39 @@ npm install
 npm run dev
 ```
 
+## Fidelity to the artboard
+
+The Figma frame is a fixed 1440 × 810 composition. `hero-banner.module.css`
+reproduces it with every size in `cqw` (1cqw = 1% of stage width) and every
+position as a percentage of that grid, so the layout is pixel-exact at 1440px
+and scales proportionally at any other width. Divide a Figma px value by 14.4
+for its cqw equivalent.
+
+Measured in Chromium at 1440 × 810, every element lands within 0.1px of its
+Figma coordinate:
+
+| Element | Figma | Rendered |
+| --- | --- | --- |
+| Nav (Home / shop / Contact) | x 271 / 442 / 604, cap-top 38 | 271 / 442 / 604, 38 |
+| About | x 1302.2, cap-top 35.46 | 1302.2, 35.4 |
+| Headline | x 82, cap-top 273 | 82, 273 |
+| Body copy | x 462, cap-top 181.35 | 462, 181.3 |
+| "Our Products" | 462, 306.35, 178 × 56 | 462, 306.3, 178 × 56 |
+| Play control | 123, 485, 126 × 126 | 123, 485, 126 × 126 |
+| EcoStove card | 1116, 477, 296 × 280 | 1116, 477, 296 × 280 |
+
+Figma positions text by cap-top while CSS positions the line box, so each text
+`top` is the Figma cap-top corrected by that element's measured half-leading and
+ascent gap. The comments in the CSS record the original Figma value.
+
+Type: Lexend (body, nav), Lexend Exa (headline, card title). Palette: `#454640`
+ground, `#753319` rust, `#d7d8d6` card, `#474842` card text.
+
 ## `<CursorReveal />`
 
 `src/components/cursor-reveal.tsx` — stacks two full-bleed layers and reveals the
 top one through a feathered, cursor-following mask. Layers accept anything:
-image, video, text, or another component.
+image, video, text, or another component. Design-agnostic; the hero just composes it.
 
 | Control | Default | What it does |
 | --- | --- | --- |
@@ -44,27 +76,39 @@ loop; React never re-renders between pointer enter and leave. Position is smooth
 by two cascaded exponential filters — one for follow, one for trail — framed in
 terms of frame delta, so the feel is identical at 60Hz and 120Hz.
 
-Measured in Chromium at 1440×860: **59.9fps median** under continuous cursor motion
-(p95 16.8ms), and the loop parks itself at **0 frames** when nothing is moving.
+Measured in Chromium at 1440 × 810: **59.9fps median** under continuous cursor
+motion (p95 16.7ms), and the loop parks itself at **0 frames** when nothing moves.
 
 ### Responsive and accessibility
 
-- No fine pointer (`hover: hover and pointer: fine` fails) → falls back per
-  `touchFallback`; tracking never attaches, so scrolling is untouched.
+- Under 768px the absolute composition reflows to a single column, the decorative
+  rules drop out, and a gradient scrim carries the type over the lit video.
+- No fine pointer → falls back per `touchFallback`; tracking never attaches, so
+  scrolling is untouched.
 - `prefers-reduced-motion: reduce` → smoothing and the breathing pulse are dropped.
-- Listeners are passive and nothing calls `preventDefault`.
 
 ## Assets
 
-`public/media/` — transcoded from the source clip, which was HEVC and so unplayable
-in Chrome and Firefox. Shipped as VP9 (490KB) with an H.264 fallback (956KB), audio
-stripped.
+`public/media/` — the video was supplied as HEVC, unplayable in Chrome and
+Firefox, so it ships as VP9 (490KB) with an H.264 fallback (956KB), audio stripped.
 
-> **`hero-bare.PLACEHOLDER.jpg` is a stand-in.** The real bare-driftwood still never
-> reached the build; this is a desaturated frame of the video. Drop the real file in
-> and update `BARE_STILL` in `src/components/hero-banner.tsx`.
+### Placeholders that still need the real export
 
-## Still open
+The Figma assets are served from `www.figma.com`, which this build environment's
+network policy blocks, so four of them are stand-ins. Each blocked file is named
+`.PLACEHOLDER` so it is obvious in the tree:
 
-The hero's type, layout and colour are placeholders pending the Figma design
-(`Daily Hero 2 — Arkkhe`). The reveal component itself is design-agnostic.
+| Placeholder | Figma node | What it should be |
+| --- | --- | --- |
+| `hero-bare.PLACEHOLDER.jpg` | `26002:3` | The bare driftwood plate. Currently a desaturated video frame, which is why the hero reads grey rather than warm taupe. |
+| `card-moss.PLACEHOLDER.jpg` | `17001:89` | The EcoStove card image. Currently a moss crop from the video. |
+| ViraHaus wordmark | `26002:10` | Rendered as plain text in `hero-banner.tsx`. Not redrawn — the real mark is an image. |
+| Icon SVGs | grid / play / burger | Redrawn from the reference screenshot in `hero-banner.tsx`; approximations, not the originals. |
+
+To resolve: either allow `figma.com` in the environment's network policy, or
+export the four assets from Figma and drop them into `public/media/`, updating the
+constants at the top of `src/components/hero-banner.tsx`.
+
+Note the bare plate is placed in Figma at 1785 × 1190 from (-342, -237) — a tighter
+crop than the video's framing. When the real plate lands, check that it still
+registers with the video, or the reveal will show a jump at the mask edge.
