@@ -166,7 +166,7 @@ export default function HeroBanner() {
           </Link>
 
           <div className={styles.cartSlot}>
-            <CartButton />
+            <CartButton tone="light" />
           </div>
 
           <button className={styles.burger} type="button" aria-label="Open menu">

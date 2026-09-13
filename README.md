@@ -121,10 +121,19 @@ Every timing is a custom property on `.stage`, so they can be retuned in one pla
 ## Pages and sections
 
 - `/` — hero, **About** (`#about`), **Shop** (`#shop`), **Gifting** (`#gift`), footer.
-- `/product/[slug]` — cinematic product page: sticky gallery with cursor-following
-  zoom and thumbnail crossfade, serif name, price, variant selector, magnetic
-  *Add to cart*, full-bleed lifestyle image, specs in glass cards, drag-to-scroll
-  *You may also like*, film grain. Statically generated for every product.
+- `/product/[slug]` — product page: sticky gallery with cursor-following zoom and
+  thumbnail crossfade, variant selector, magnetic *Add to cart*, full-bleed
+  lifestyle image, spec tiles, drag-to-scroll *You may also like*. Statically
+  generated for every product.
+
+Everything below the hero is drawn from the hero's own system, defined once in
+`globals.css`: the sand ground (`#c9c5bf`), ink type, rust accents (`#753319`),
+white type only where it sits on imagery, hairlines at 25/50/75%, the EcoStove
+card as the tile (`.tile`), the *Our Products* pill as the button (`.pill-light`,
+`.pill-dark`), Lexend for text and Lexend Exa for display (`.display`). Section
+headings rise glyph by glyph on the prototype's critically damped spring
+(`GlyphRise`), and everything else eases in on the same curve (`Reveal`,
+`figSpring` in `motion.ts`).
 
 The shop has three categories — Terrariums, Vivariums, Plants — as tiles that
 double as tabs; the grid beneath re-lays out with Framer Motion. Products and
@@ -146,14 +155,13 @@ feathered mask absorbs — there is no visible seam at the reveal edge.
 ### Placeholders that still need the real export
 
 The Figma assets are served from `www.figma.com`, which this build environment's
-network policy blocks, so two are still stand-ins. Each blocked file is named
+network policy blocks, so two are still stand-ins. The fourteen product photos are the real supplied files. Each blocked file is named
 `.PLACEHOLDER` so it is obvious in the tree:
 
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |
 | `card-moss.PLACEHOLDER.jpg` | `17001:89` | The EcoStove card image. Currently a moss crop from the video. |
-| `about-terrarium.jpg` | Higgsfield job `512ad8e7` | The generated "abstract 3D terrarium" render; its CDN is blocked here. Currently a darkened video frame. |
-| `products/*.jpg` (10) | supplied photos | Terrarium jar, vivarium tank, paludarium cabinet, desk lifestyle, and six plants. Currently crops of the video; overwrite with the same file names. |
+| `about-terrarium.jpg` | Higgsfield job `512ad8e7` | The generated "abstract 3D terrarium" render; its CDN is blocked here. Currently the terrarium-jar photo, which shares the brief's near-black ground. |
 | Icon SVGs | grid / play / burger | Redrawn from the reference screenshot in `hero-banner.tsx`; approximations, not the originals. |
 
 To resolve: export the assets from Figma and upload them into `public/media/`

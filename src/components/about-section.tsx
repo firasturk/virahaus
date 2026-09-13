@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
-import FilmGrain from "./film-grain";
+import GlyphRise from "./glyph-rise";
 import Reveal from "./reveal";
 
 const PRINCIPLES = [
@@ -16,57 +16,46 @@ export default function AboutSection() {
   const reduced = useReducedMotion();
 
   return (
-    <section id="about" className="relative overflow-hidden bg-ink px-6 py-24 text-bone sm:px-10 lg:py-36">
-      <FilmGrain />
+    <section id="about" className="relative overflow-hidden bg-sand px-6 py-24 text-ink sm:px-10 lg:py-36">
+      <div className="rails" aria-hidden><span style={{ left: "25%" }} /><span style={{ left: "50%" }} /><span style={{ left: "75%" }} /></div>
+
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
         <div>
-          <Reveal>
-            <p className="text-[0.7rem] tracking-[0.32em] uppercase text-moss">About the studio</p>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h2 className="mt-5 font-serif text-[clamp(2.6rem,5.2vw,4.6rem)] leading-[0.98] tracking-[-0.01em]">
-              We build small worlds
-              <br />
-              <em className="text-rust-soft">and seal them shut.</em>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className="mt-8 max-w-xl text-[1.05rem] leading-relaxed text-bone/75">
+          <Reveal><p className="kicker">About the studio</p></Reveal>
+          <h2 className="display mt-6 text-[clamp(2.4rem,4.6vw,3.9rem)]">
+            <GlyphRise text="We build small" />
+            <br />
+            <GlyphRise text="worlds, sealed." offset={14} />
+          </h2>
+          <Reveal delay={0.25}>
+            <p className="mt-8 max-w-xl text-[1.05rem] leading-relaxed text-rust">
               ViraHaus makes terrariums, vivariums and the plants that live inside them. A closed jar of moss and stone
               becomes a working ecosystem: it rains on its own, feeds on its own light, and asks for almost nothing back.
             </p>
-            <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-bone/75">
+            <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-ink/75">
               Every piece is planted by hand in the studio, photographed, and delivered with a care guide short enough to
               actually read. Nothing here is as dead as it looks.
             </p>
           </Reveal>
-          <Reveal delay={0.24}>
+          <Reveal delay={0.35}>
             <ul className="mt-10 grid gap-3 sm:grid-cols-3">
               {PRINCIPLES.map(([title, body]) => (
-                <li key={title} className="glass rounded-2xl p-5">
-                  <p className="text-sm font-medium">{title}</p>
-                  <p className="mt-2 text-xs leading-relaxed text-bone/60">{body}</p>
+                <li key={title} className="tile p-5">
+                  <p className="display text-[1.15rem] tracking-[-0.06em]">{title}</p>
+                  <p className="mt-2 text-xs leading-relaxed text-card-ink/70">{body}</p>
                 </li>
               ))}
             </ul>
           </Reveal>
         </div>
 
-        <Reveal delay={0.1} y={40}>
-          {/* Floats slowly, so the render reads as weightless rather than placed. */}
+        <Reveal delay={0.15} y={40}>
           <motion.div
-            className="relative aspect-[16/10] overflow-hidden rounded-[2rem] shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]"
+            className="relative aspect-[16/10] overflow-hidden rounded-[2.5rem] shadow-[0_40px_90px_-40px_rgba(22,20,15,0.6)]"
             animate={reduced ? undefined : { y: [0, -10, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
           >
-            <Image
-              src="/media/about-terrarium.jpg"
-              alt="An abstract glass terrarium floating in darkness, lit from the side."
-              fill
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              className="object-cover"
-            />
-            <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/10" />
+            <Image src="/media/about-terrarium.jpg" alt="A sealed glass terrarium lit from above." fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" />
           </motion.div>
         </Reveal>
       </div>
