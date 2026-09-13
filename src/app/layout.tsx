@@ -1,21 +1,16 @@
 import type { Metadata } from "next";
-import { Lexend, Lexend_Exa, Rozha_One } from "next/font/google";
+import { Instrument_Serif, Lexend, Lexend_Exa } from "next/font/google";
 import "./globals.css";
 
-const lexend = Lexend({
-  variable: "--font-lexend",
-  subsets: ["latin"],
-});
+import { CartProvider } from "@/components/cart";
 
-const lexendExa = Lexend_Exa({
-  variable: "--font-lexend-exa",
-  subsets: ["latin"],
-});
-
-const rozhaOne = Rozha_One({
-  variable: "--font-rozha-one",
+const lexend = Lexend({ variable: "--font-lexend", subsets: ["latin"] });
+const lexendExa = Lexend_Exa({ variable: "--font-lexend-exa", subsets: ["latin"] });
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
   weight: "400",
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -28,9 +23,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${lexend.variable} ${lexendExa.variable} ${rozhaOne.variable} h-full antialiased`}
+      className={`${lexend.variable} ${lexendExa.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <CartProvider>{children}</CartProvider>
+      </body>
     </html>
   );
 }

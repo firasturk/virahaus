@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { CSSProperties } from "react";
 
+import { CartButton } from "./cart";
 import CursorReveal from "./cursor-reveal";
 import ScrollReveal from "./scroll-reveal";
 import styles from "./hero-banner.module.css";
@@ -148,20 +150,24 @@ export default function HeroBanner() {
           />
 
           <nav className={styles.nav}>
-            <a className={styles.navHome} href="#">
+            <Link className={styles.navHome} href="/">
               Home
-            </a>
-            <a className={styles.navShop} href="#">
+            </Link>
+            <Link className={styles.navShop} href="/#shop">
               shop
-            </a>
-            <a className={styles.navContact} href="#">
+            </Link>
+            <Link className={styles.navContact} href="/#gift">
               Contact
-            </a>
+            </Link>
           </nav>
 
-          <a className={styles.about} href="#">
+          <Link className={styles.about} href="/#about">
             About
-          </a>
+          </Link>
+
+          <div className={styles.cartSlot}>
+            <CartButton />
+          </div>
 
           <button className={styles.burger} type="button" aria-label="Open menu">
             <BurgerGlyph />

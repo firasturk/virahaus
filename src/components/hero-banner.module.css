@@ -139,6 +139,13 @@
   color: #fff;
 }
 
+.cartSlot {
+  position: absolute;
+  left: 81.2%;
+  top: 2.9%;
+  pointer-events: auto;
+}
+
 .burger {
   position: absolute;
   left: 96.106%; /* 1383.93 */
@@ -447,7 +454,8 @@
 }
 
 .about,
-.burger {
+.burger,
+.cartSlot {
   --from: -18.75cqw; /* 360 * 0.75 */
   animation: introDrop var(--nav-dur) var(--fig-spring) var(--nav-delay) both;
 }
@@ -505,7 +513,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage :is(.logo, .nav, .about, .burger, .letter, .copyInner, .pill, .play, .gridLine, .scrollLine, .scrollLabel, .scrollTick) {
+  .stage :is(.logo, .nav, .about, .burger, .cartSlot, .letter, .copyInner, .pill, .play, .gridLine, .scrollLine, .scrollLabel, .scrollTick) {
     animation: none;
   }
 }
@@ -558,6 +566,12 @@
 
   .logo {
     height: 1.5rem;
+  }
+
+  .cartSlot {
+    top: 1.35rem;
+    right: 4.25rem;
+    left: auto;
   }
 
   .burger {

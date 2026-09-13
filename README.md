@@ -118,6 +118,21 @@ critically damped curve, matching their non-overshooting character.
 
 Every timing is a custom property on `.stage`, so they can be retuned in one place.
 
+## Pages and sections
+
+- `/` — hero, **About** (`#about`), **Shop** (`#shop`), **Gifting** (`#gift`), footer.
+- `/product/[slug]` — cinematic product page: sticky gallery with cursor-following
+  zoom and thumbnail crossfade, serif name, price, variant selector, magnetic
+  *Add to cart*, full-bleed lifestyle image, specs in glass cards, drag-to-scroll
+  *You may also like*, film grain. Statically generated for every product.
+
+The shop has three categories — Terrariums, Vivariums, Plants — as tiles that
+double as tabs; the grid beneath re-lays out with Framer Motion. Products and
+copy live in `src/data/products.ts`. The cart is a small external store backed by
+localStorage, read through `useSyncExternalStore` so the server renders it empty
+and the client swaps in the stored cart after hydration. Gifting rotates eight
+friction-reducing microcopy lines under its CTA (`GIFT_MICROCOPY`).
+
 ## Assets
 
 `public/media/` — the video was supplied as HEVC, unplayable in Chrome and
@@ -137,6 +152,8 @@ network policy blocks, so two are still stand-ins. Each blocked file is named
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |
 | `card-moss.PLACEHOLDER.jpg` | `17001:89` | The EcoStove card image. Currently a moss crop from the video. |
+| `about-terrarium.jpg` | Higgsfield job `512ad8e7` | The generated "abstract 3D terrarium" render; its CDN is blocked here. Currently a darkened video frame. |
+| `products/*.jpg` (10) | supplied photos | Terrarium jar, vivarium tank, paludarium cabinet, desk lifestyle, and six plants. Currently crops of the video; overwrite with the same file names. |
 | Icon SVGs | grid / play / burger | Redrawn from the reference screenshot in `hero-banner.tsx`; approximations, not the originals. |
 
 To resolve: export the assets from Figma and upload them into `public/media/`
