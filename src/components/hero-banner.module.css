@@ -353,29 +353,57 @@
 /*
  * Entrance choreography
  * ---------------------
- * Copied from the "Daily Hero 10" prototype (Frame1 -> Frame2, Smart Animate).
- * Three moves make up its vocabulary:
+ * Read out of the "Daily Hero 10 — Arkkhe" prototype (file anLaOa0DI4KEG6hw2m5pw7,
+ * page "Animation") via the Plugin API, not eyeballed. Every duration, easing and
+ * travel ratio below is the value Figma stores.
  *
- *   1. Navigation slides down from above the frame. Every item shares one
- *      duration but travels a different distance — logo 110px, centre menu
- *      220px, right-hand items 360px in a 1080px frame — so they arrive as a
- *      parallax stagger rather than a queue. Reproduced here at 0.75 scale.
- *   2. Display type rises letter by letter, each glyph starting deeper than
- *      the one before it and fading in, all on the same clock. The cascade
- *      comes from distance, not from delay.
- *   3. Secondary text drops into a clipping mask from above.
+ * The easing is one curve. Figma's Orbit_text reaction carries an explicit spring
+ * — mass 1, stiffness 26, damping 10.2 — which works out to zeta = 1.0002, i.e.
+ * exactly critically damped, and omega0 * duration = 11.18 (a 99.98% settle).
+ * The normalised step response of a critically damped spring is therefore the
+ * same curve for every such reaction in the file; only the duration differs. It
+ * is sampled here as linear(), which reproduces the spring rather than
+ * approximating it with a bezier.
  *
- * Every timing is a variable on .stage so the numbers can be tuned against the
- * prototype's exact reactions without touching the rules below.
+ * Durations, verbatim from the file:
+ *   Navigation          SMART_ANIMATE  2.0835s   (trigger: after 0.8s)
+ *   Orbit_text          SMART_ANIMATE  2.1929s   (trigger: after ~0s, custom spring)
+ *   AX/724_text         SMART_ANIMATE  1.2501s   (trigger: after ~0s)
+ *   Bottom-left/right   SMART_ANIMATE  2.0835s   (trigger: after 2s)
+ *   Scroll-Down         SMART_ANIMATE  1.2776s   (trigger: after 2s, GENTLE)
+ *   lines               SMART_ANIMATE  4.1671s   (trigger: after 4s)
+ *
+ * Delays are the one thing NOT taken verbatim. In the prototype they are paced
+ * against a video that plays before the frame animates, so 2s and 4s waits read
+ * correctly there. This hero has no such preamble, so the delays are scaled to
+ * 0.4x, preserving the order and the relative spacing without leaving the page
+ * inert for four seconds. Everything else is the file's own number.
+ *
+ * SLOW and GENTLE are Figma spring presets whose constants the Plugin API does
+ * not expose — only the resolved duration. They are modelled with the same
+ * critically damped curve, which matches their non-overshooting character.
  */
 
 .stage {
-  --intro-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --intro-nav: 1.15s;
-  --intro-type: 1.3s;
-  --intro-copy: 1.05s;
-  --intro-ui: 0.95s;
-  --intro-rails: 1.4s;
+  --fig-spring: linear(0 0%, 0.08004 4.17%, 0.23917 8.33%, 0.40737 12.5%, 0.55581 16.67%, 0.67588 20.83%, 0.76813 25%, 0.83662 29.17%, 0.88626 33.33%, 0.92158 37.5%, 0.94637 41.67%, 0.96357 45.83%, 0.9754 50%, 0.98347 54.17%, 0.98894 58.33%, 0.99263 62.5%, 0.99511 66.67%, 0.99676 70.83%, 0.99786 75%, 0.99859 79.17%, 0.99907 83.33%, 0.99939 87.5%, 0.9996 91.67%, 0.99974 95.83%, 1 100%);
+
+  --nav-dur: 2.0835s;
+  --nav-delay: 0.32s; /* file: 0.8s */
+
+  --type-dur: 2.1929s;
+  --type-delay: 0s;
+
+  --copy-dur: 1.2501s;
+  --copy-delay: 0s;
+
+  --ui-dur: 2.0835s;
+  --ui-delay: 0.8s; /* file: 2s */
+
+  --rails-dur: 4.1671s;
+  --rails-delay: 1.6s; /* file: 4s */
+
+  --scroll-dur: 1.2776s;
+  --scroll-delay: 0.8s; /* file: 2s */
 }
 
 @keyframes introDrop {
@@ -403,28 +431,39 @@
   to { transform: scaleY(1); }
 }
 
-/* 1. Navigation — same clock, three travel distances. */
+/*
+ * Navigation. The file's Variant3 -> default pair moves three groups different
+ * distances on one clock: logo 110px, centre menu 220px, right-hand items 360px
+ * in a 1080px frame. Scaled by 0.75 for this 810px frame.
+ */
 .logo {
-  --from: -5.73cqw; /* 110px * 0.75 */
-  animation: introDrop var(--intro-nav) var(--intro-ease) both;
+  --from: -5.73cqw; /* 110 * 0.75 */
+  animation: introDrop var(--nav-dur) var(--fig-spring) var(--nav-delay) both;
 }
 
 .nav {
-  --from: -11.46cqw; /* 220px * 0.75 */
-  animation: introDrop var(--intro-nav) var(--intro-ease) both;
+  --from: -11.46cqw; /* 220 * 0.75 */
+  animation: introDrop var(--nav-dur) var(--fig-spring) var(--nav-delay) both;
 }
 
 .about,
 .burger {
-  --from: -18.75cqw; /* 360px * 0.75 */
-  animation: introDrop var(--intro-nav) var(--intro-ease) both;
+  --from: -18.75cqw; /* 360 * 0.75 */
+  animation: introDrop var(--nav-dur) var(--fig-spring) var(--nav-delay) both;
 }
 
-/* 2. Display type — each glyph starts lower than the last. */
+/*
+ * Display type. Orbit_text holds five 210px glyphs that rise from y 210, 280,
+ * 380, 490 and 620 to zero while fading 0 -> 1 — so each starts between 1.0x and
+ * 2.95x its own height below home, and the cascade comes from distance on a
+ * shared clock, not from staggered delays. That ratio is what transfers: our
+ * glyphs are 52px (3.6111cqw), so the ramp runs 1.0x -> 2.95x of that across the
+ * twenty glyphs of both lines, which keeps one continuous left-to-right cascade.
+ */
 .letter {
   display: inline-block;
-  --from: calc(1.6cqw + var(--i) * 0.5cqw);
-  animation: introRise var(--intro-type) var(--intro-ease) 0.15s both;
+  --from: calc(3.6111cqw + var(--i) * 0.3706cqw);
+  animation: introRise var(--type-dur) var(--fig-spring) var(--type-delay) both;
 }
 
 .space {
@@ -432,36 +471,37 @@
   width: 0.28em;
 }
 
-/* 3. Secondary text — drops into its own clip. */
+/* Secondary copy. AX/724_text drops into its own clip from well above it. */
 .copy {
   overflow: hidden;
 }
 
 .copyInner {
   display: block;
-  animation: introMaskDrop var(--intro-copy) var(--intro-ease) 0.45s both;
+  animation: introMaskDrop var(--copy-dur) var(--fig-spring) var(--copy-delay) both;
 }
 
-/* Supporting UI settles in after the type. */
+/* Supporting UI — the file's bottom-left block, which fades and slides in together. */
 .pill {
   --from: 2cqw;
-  animation: introRise var(--intro-ui) var(--intro-ease) 0.7s both;
+  animation: introRise var(--ui-dur) var(--fig-spring) var(--ui-delay) both;
 }
 
 .play {
   --from: 2cqw;
-  animation: introRise var(--intro-ui) var(--intro-ease) 0.85s both;
+  animation: introRise var(--ui-dur) var(--fig-spring) var(--ui-delay) both;
 }
 
+/* The rails arrive last and slowest, as `lines` does in the file. */
 .gridLine,
 .scrollLine {
   transform-origin: 50% 0;
-  animation: introGrow var(--intro-rails) var(--intro-ease) 0.1s both;
+  animation: introGrow var(--rails-dur) var(--fig-spring) var(--rails-delay) both;
 }
 
 .scrollLabel,
 .scrollTick {
-  animation: introFade 0.8s ease 1.1s both;
+  animation: introFade var(--scroll-dur) var(--fig-spring) var(--scroll-delay) both;
 }
 
 @media (prefers-reduced-motion: reduce) {

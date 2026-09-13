@@ -87,6 +87,37 @@ motion (p95 16.7ms), and the loop parks itself at **0 frames** when nothing move
   scrolling is untouched.
 - `prefers-reduced-motion: reduce` → smoothing and the breathing pulse are dropped.
 
+## Entrance animation
+
+Read out of the *Daily Hero 10 — Arkkhe* prototype (file `anLaOa0DI4KEG6hw2m5pw7`,
+page "Animation") through the Plugin API rather than eyeballed from the preview.
+
+The easing is a single curve. The `Orbit_text` reaction carries an explicit
+spring — mass 1, stiffness 26, damping 10.2 — which resolves to ζ = 1.0002, i.e.
+exactly critically damped, with ω₀ × duration = 11.18 (a 99.98% settle). The
+normalised step response is therefore identical for every such reaction in the
+file; only the duration changes. It is sampled as a CSS `linear()` easing, which
+reproduces the spring instead of approximating it with a bezier.
+
+| Element | Figma duration | Motion |
+| --- | --- | --- |
+| Navigation | 2.0835s | Logo 110px, centre menu 220px, right items 360px in a 1080px frame — one clock, three distances, so they land as a parallax stagger. Scaled 0.75 here. |
+| Display type | 2.1929s | Five glyphs rise from 1.0×–2.95× their own height below home while fading in. The cascade is distance on a shared clock, not staggered delays. |
+| Secondary copy | 1.2501s | Drops into its own clip from above. |
+| Supporting UI | 2.0835s | Fades and slides in together. |
+| Rails | 4.1671s | Arrive last and slowest. |
+| Scroll marker | 1.2776s | Figma's GENTLE preset. |
+
+Delays are the one value not taken verbatim: in the prototype they are paced
+against a video that plays before the frame animates, so its 2s and 4s waits read
+correctly there. This hero has no preamble, so delays are scaled to 0.4× —
+preserving order and relative spacing without leaving the page inert for four
+seconds. `SLOW` and `GENTLE` are Figma spring presets whose constants the Plugin
+API does not expose, only the resolved duration; they are modelled with the same
+critically damped curve, matching their non-overshooting character.
+
+Every timing is a custom property on `.stage`, so they can be retuned in one place.
+
 ## Assets
 
 `public/media/` — the video was supplied as HEVC, unplayable in Chrome and
