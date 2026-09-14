@@ -106,6 +106,8 @@ export default function HeroBanner() {
         defaultRevealSize={0}
         organic={0.7}
         touchFallback="top"
+        idleSweep
+        idleSweepDelay={3000}
         bottomLayer={
           <Image
             src={BARE_STILL}
@@ -198,6 +200,12 @@ export default function HeroBanner() {
               <PlayGlyph />
             </span>
           </button>
+
+          {/* Only a mouse can reveal the moss, so only a mouse is told. Fades on the first move. */}
+          <p className={styles.hint}>
+            <span className={styles.hintDot} aria-hidden />
+            Move your mouse to see it come alive
+          </p>
 
           <div className={styles.scrollRail} aria-hidden>
             <span className={styles.scrollLine} />

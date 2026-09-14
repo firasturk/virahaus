@@ -29,6 +29,13 @@ export interface CursorRevealProps {
   organic?: number;
   /** What a device without a fine pointer sees instead of cursor tracking. */
   touchFallback?: TouchFallback;
+  /**
+   * Until the visitor first moves the mouse, glide the reveal across the stage
+   * on its own every few seconds, so the hidden layer announces itself.
+   */
+  idleSweep?: boolean;
+  /** Milliseconds after mount before the first idle sweep. */
+  idleSweepDelay?: number;
   /** Rendered above both layers and never masked, for headlines and CTAs. */
   children?: ReactNode;
   className?: string;
@@ -59,6 +66,14 @@ const BREATH_SPEED = 0.00055;
 const FOLLOW_RATE = [3, 26] as const;
 const TRAIL_RATE = [26, 3.5] as const;
 const SNAP_RATE = 1000;
+
+/* The idle sweep: one pass along a shallow arc, then a pause before the next. */
+const SWEEP_DURATION = 4200;
+const SWEEP_GAP = 3200;
+const SWEEP_FROM_X = 0.3;
+const SWEEP_TO_X = 0.72;
+const SWEEP_Y = 0.6;
+const SWEEP_LIFT = 0.12;
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const mix = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -120,6 +135,8 @@ export default function CursorReveal({
   defaultRevealSize = 0,
   organic = 0.7,
   touchFallback = "top",
+  idleSweep = false,
+  idleSweepDelay = 2800,
   children,
   className,
   style,
@@ -144,6 +161,9 @@ export default function CursorReveal({
     inside: false,
     lastFrame: 0,
     running: false,
+    /* Start time of the idle sweep in flight, or 0. */
+    sweepStart: 0,
+    interacted: false,
   });
 
   const rect = useRef({ left: 0, top: 0, width: 0, height: 0 });
@@ -153,7 +173,7 @@ export default function CursorReveal({
   const box = revealSize * BOX_RATIO;
   const restScale = clamp01(revealSize > 0 ? defaultRevealSize / revealSize : 0);
 
-  const config = useRef({ box, restScale, followSpeed, inertia, enterDuration, exitDuration });
+  const config = useRef({ box, restScale, followSpeed, inertia, enterDuration, exitDuration, idleSweep, idleSweepDelay });
 
   /*
    * Republished after every render so prop edits reach the running loop without
@@ -161,7 +181,7 @@ export default function CursorReveal({
    * safe under concurrent rendering, where a render may be discarded.
    */
   useEffect(() => {
-    config.current = { box, restScale, followSpeed, inertia, enterDuration, exitDuration };
+    config.current = { box, restScale, followSpeed, inertia, enterDuration, exitDuration, idleSweep, idleSweepDelay };
   });
 
   const maskImage = useMemo(() => buildMask(feather, organic), [feather, organic]);
@@ -223,6 +243,24 @@ export default function CursorReveal({
       const dt = Math.min((now - state.lastFrame) / 1000, 0.05);
       state.lastFrame = now;
 
+      /*
+       * The idle sweep: a slow arc across the lower half of the stage, then the
+       * mask closes and the next pass is scheduled. Any real pointer move ends it.
+       */
+      if (state.sweepStart) {
+        const { width, height } = rect.current;
+        const p = (now - state.sweepStart) / SWEEP_DURATION;
+        if (p >= 1) {
+          state.sweepStart = 0;
+          state.targetScale = cfg.restScale;
+          scheduleSweep(SWEEP_GAP);
+        } else {
+          const e = smoothstep(clamp01(p));
+          state.pointerX = width * (SWEEP_FROM_X + (SWEEP_TO_X - SWEEP_FROM_X) * e);
+          state.pointerY = height * (SWEEP_Y - SWEEP_LIFT * Math.sin(e * Math.PI));
+        }
+      }
+
       /* An ambient path for devices that cannot point at anything. */
       if (mode.current === "drift") {
         const { width, height } = rect.current;
@@ -282,9 +320,31 @@ export default function CursorReveal({
       frame = requestAnimationFrame(tick);
     };
 
+    let sweepTimer = 0;
+    const scheduleSweep = (delay: number) => {
+      window.clearTimeout(sweepTimer);
+      if (!config.current.idleSweep || state.interacted || mode.current !== "pointer") return;
+      sweepTimer = window.setTimeout(() => {
+        if (state.interacted || state.inside || mode.current !== "pointer" || reduced.current) return;
+        const { width, height } = rect.current;
+        state.sweepStart = performance.now();
+        state.pointerX = state.leadX = state.x = width * SWEEP_FROM_X;
+        state.pointerY = state.leadY = state.y = height * SWEEP_Y;
+        state.targetScale = 1;
+        start();
+      }, delay);
+    };
+
     const onPointerMove = (event: PointerEvent) => {
       if (mode.current !== "pointer") return;
       if (event.pointerType !== "mouse" && event.pointerType !== "pen") return;
+
+      if (!state.interacted) {
+        state.interacted = true;
+        state.sweepStart = 0;
+        window.clearTimeout(sweepTimer);
+        stage.dataset.interacted = "true";
+      }
 
       state.pointerX = event.clientX - rect.current.left;
       state.pointerY = event.clientY - rect.current.top;
@@ -346,6 +406,8 @@ export default function CursorReveal({
       start();
     }
 
+    scheduleSweep(config.current.idleSweepDelay);
+
     const observer = new ResizeObserver(measure);
     observer.observe(stage);
 
@@ -358,6 +420,8 @@ export default function CursorReveal({
 
     return () => {
       cancelAnimationFrame(frame);
+      window.clearTimeout(sweepTimer);
+      state.sweepStart = 0;
       state.running = false;
       observer.disconnect();
       stage.removeEventListener("pointermove", onPointerMove);

@@ -27,9 +27,9 @@ export default function ShopSection() {
           <GlyphRise text="something alive." offset={18} />
         </h2>
 
-        {/* Category tiles double as the tabs, drawn like the EcoStove card. */}
+        {/* The categories are the hero's "Our Products" pill, one per category, and double as the tabs. */}
         <Reveal delay={0.2}>
-          <div role="tablist" aria-label="Categories" className="mt-12 grid gap-4 sm:grid-cols-3">
+          <div role="tablist" aria-label="Categories" className="mt-12 flex flex-wrap gap-4">
             {categories.map((c) => {
               const on = c.slug === active;
               return (
@@ -39,15 +39,15 @@ export default function ShopSection() {
                   aria-selected={on}
                   type="button"
                   onClick={() => setActive(c.slug)}
-                  className={`group relative aspect-[4/3] overflow-hidden rounded-[2.5rem] bg-card text-left transition ${on ? "ring-2 ring-rust" : "ring-1 ring-ink/10 hover:ring-ink/30"}`}
+                  className={`pill-dark relative text-base transition ${on ? "!border-rust bg-ink/5" : ""}`}
                 >
-                  <Image src={c.image} alt="" fill sizes="(min-width: 640px) 33vw, 100vw" className={`object-cover transition duration-[1200ms] ${on ? "scale-105" : "group-hover:scale-105"}`} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/15 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                    <p className="display text-2xl tracking-[-0.08em]">{c.name}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-white/75">{c.blurb}</p>
-                  </div>
-                  {on && <motion.span layoutId="shop-tab" className="absolute top-5 right-5 h-3 w-3 rounded-full bg-white" />}
+                  <span className="dot">
+                    <svg viewBox="0 0 11 11" className="h-3 w-3" fill="currentColor" aria-hidden>
+                      <circle cx="2.2" cy="2.2" r="1.6" /><circle cx="8.8" cy="2.2" r="1.6" /><circle cx="2.2" cy="8.8" r="1.6" /><circle cx="8.8" cy="8.8" r="1.6" />
+                    </svg>
+                  </span>
+                  {c.name}
+                  {on && <motion.span layoutId="shop-tab" className="absolute -bottom-3 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-rust" />}
                 </button>
               );
             })}

@@ -26,6 +26,55 @@
   font-family: var(--font-lexend), system-ui, sans-serif;
 }
 
+/* --- Reveal hint: under the play button, white like the headline --- */
+
+.hint {
+  position: absolute;
+  left: 8.542%; /* 123 */
+  top: 80.5%; /* 652 */
+  margin: 0;
+  display: none;
+  align-items: center;
+  gap: 0.7cqw;
+  font-size: 0.9722cqw; /* 14px */
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 12px rgba(22, 20, 15, 0.35);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.stage[data-mode="pointer"] .hint {
+  display: flex;
+}
+
+.stage[data-interacted="true"] .hint {
+  opacity: 0;
+}
+
+.hintDot {
+  position: relative;
+  width: 0.8333cqw; /* 12px */
+  height: 0.8333cqw;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.hintDot::before {
+  content: "";
+  position: absolute;
+  inset: -0.35cqw;
+  border-radius: inherit;
+  border: 1px solid #fff;
+  animation: hintPulse 2.2s ease-out infinite;
+}
+
+@keyframes hintPulse {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
 /* --- Structural grid: vertical rules at x = 0, 360, 1080, 1440 --- */
 
 .grid {
@@ -512,8 +561,16 @@
   animation: introFade var(--scroll-dur) var(--fig-spring) var(--scroll-delay) both;
 }
 
+.stage[data-mode="pointer"] .hint {
+  animation: introFade var(--scroll-dur) var(--fig-spring) 2.4s both;
+}
+
+.stage[data-mode="pointer"][data-interacted="true"] .hint {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .stage :is(.logo, .nav, .about, .burger, .cartSlot, .letter, .copyInner, .pill, .play, .gridLine, .scrollLine, .scrollLabel, .scrollTick) {
+  .stage :is(.logo, .nav, .about, .burger, .cartSlot, .letter, .copyInner, .pill, .play, .gridLine, .scrollLine, .scrollLabel, .scrollTick, .hint, .hintDot::before) {
     animation: none;
   }
 }

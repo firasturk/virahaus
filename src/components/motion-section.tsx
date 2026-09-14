@@ -75,6 +75,12 @@ export default function MotionSection() {
   const intro = inView || !!reduced;
 
   /* Slow parallax on the background against the pinned frame. */
+  /* One bar per state, each filling across its third of the scroll. */
+  const seg0 = useTransform(scrollYProgress, [0, 1 / 3], [0, 1]);
+  const seg1 = useTransform(scrollYProgress, [1 / 3, 2 / 3], [0, 1]);
+  const seg2 = useTransform(scrollYProgress, [2 / 3, 1], [0, 1]);
+  const segs = [seg0, seg1, seg2];
+
   const bgY = useSpring(useTransform(scrollYProgress, [0, 1], ["0%", "-6%"]), { stiffness: 60, damping: 20 });
   
   if (mobile) return <MobileStates />;
@@ -85,7 +91,7 @@ export default function MotionSection() {
   const cards = products.filter((p) => p.category === s.slug).slice(0, 3);
 
   return (
-    <section ref={wrap} id="about" className="relative h-[400svh] bg-sand text-ink">
+    <section ref={wrap} id="about" className="relative h-[320svh] bg-sand text-ink">
       <div className="sticky top-0 h-svh overflow-hidden [container-type:inline-size]">
         {/* 1 · background video, one per state, crossfading */}
         <AnimatePresence initial={false}>
@@ -138,6 +144,21 @@ export default function MotionSection() {
             </motion.div>
           </AnimatePresence>
         </div>
+
+        {/* 5b · progress: where the visitor is in the stage and how much is left */}
+        <motion.div className="absolute top-[56%] left-[3.6%] z-30 w-[17cqw]" initial={{ opacity: 0 }} animate={intro ? { opacity: 1 } : {}} transition={{ delay: 1, duration: 0.8 }}>
+          <div className="kicker flex justify-between !text-ink/70">
+            <span>0{state + 1} / 03</span>
+            <span>Scroll</span>
+          </div>
+          <div className="mt-3 grid grid-cols-3 gap-[0.6cqw]">
+            {segs.map((v, i) => (
+              <span key={i} className="relative block h-px bg-ink/20">
+                <motion.span style={{ scaleX: v }} className="absolute inset-0 origin-left bg-ink" />
+              </span>
+            ))}
+          </div>
+        </motion.div>
 
         {/* 6 · vertical text, right */}
         <motion.p className="absolute top-[14%] right-[2.6%] z-30 text-[0.7cqw] tracking-[0.3em] text-ink/60 uppercase [writing-mode:vertical-rl]" initial={{ x: 48, opacity: 0 }} animate={intro ? { x: 0, opacity: 1 } : {}} transition={{ duration: 1.4, ease: figSpring, delay: 0.6 }}>
