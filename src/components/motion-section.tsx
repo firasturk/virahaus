@@ -99,7 +99,7 @@ export default function MotionSection() {
           <motion.div key={s.slug} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.2, ease: EXPO }}>
             <motion.div style={{ y: bgY }} className="absolute inset-[-6%_0]" initial={{ scale: 1.36 }} animate={intro ? { scale: 1 } : { scale: 1.36 }} transition={{ duration: 2, ease: figSpring }}>
               <video className="h-full w-full object-cover" poster={`/media/bg-${s.slug}.jpg`} autoPlay muted loop playsInline preload="metadata">
-                <source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" />
+                <source src={`/media/bg-${s.slug}.webm`} type="video/webm" /><source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" />
               </video>
             </motion.div>
           </motion.div>
@@ -110,7 +110,7 @@ export default function MotionSection() {
         <div className="rails" aria-hidden><span style={{ left: "25%", background: "var(--hair-dark)" }} /><span style={{ left: "50%", background: "var(--hair-dark)" }} /><span style={{ left: "75%", background: "var(--hair-dark)" }} /></div>
 
         {/* 3 · giant word */}
-        <div className="absolute inset-x-0 bottom-[2%] z-10 flex justify-center overflow-hidden">
+        <div className="absolute inset-x-0 bottom-[15%] z-10 flex justify-center overflow-hidden">
           <AnimatePresence mode="wait" initial={false}>
             <motion.h2 key={s.word} className="display flex whitespace-nowrap leading-none text-ink/90" style={{ fontSize: `${Math.min(26, 150 / s.word.length)}cqw` }} aria-label={s.word}>
               {Array.from(s.word).map((ch, i) => (
@@ -127,7 +127,7 @@ export default function MotionSection() {
         </div>
 
         {/* 4 · driftwood in front of the word */}
-        <motion.div style={{ x: woodX }} className="pointer-events-none absolute bottom-[-2%] left-[-6%] z-20 w-[78%]" initial={{ x: -1100, opacity: 0 }} animate={intro ? { x: 0, opacity: 1 } : {}} transition={{ duration: 2, ease: figSpring }}>
+        <motion.div style={{ x: woodX }} className="pointer-events-none absolute bottom-[-6%] left-[-6%] z-20 w-[78%]" initial={{ x: -1100, opacity: 0 }} animate={intro ? { x: 0, opacity: 1 } : {}} transition={{ duration: 2, ease: figSpring }}>
           <Image src="/media/wood-foreground.png" alt="" width={2688} height={1152} className="h-auto w-full" priority />
         </motion.div>
 
@@ -202,7 +202,7 @@ function MobileStates() {
         const cards = products.filter((p) => p.category === s.slug).slice(0, 3);
         return (
           <div key={s.slug} className="relative min-h-[100svh] overflow-hidden">
-            <video className="absolute inset-0 h-full w-full object-cover" poster={`/media/bg-${s.slug}.jpg`} autoPlay muted loop playsInline preload="metadata"><source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" /></video>
+            <video className="absolute inset-0 h-full w-full object-cover" poster={`/media/bg-${s.slug}.jpg`} autoPlay muted loop playsInline preload="metadata"><source src={`/media/bg-${s.slug}.webm`} type="video/webm" /><source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" /></video>
             <div className="absolute inset-0 bg-gradient-to-t from-sand/70 via-sand/10 to-sand/40" />
             <div className="relative flex min-h-[100svh] flex-col justify-between p-6">
               <div><p className="kicker">0{i + 1}</p><h3 className="display mt-3 text-3xl">{s.title[0]}<br />{s.title[1]}</h3><p className="mt-4 max-w-sm text-sm text-ink/70">{s.copy}</p></div>

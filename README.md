@@ -165,14 +165,12 @@ The Figma assets are served from `www.figma.com`, which this build environment's
 network policy blocks, so two are still stand-ins. The fourteen product photos are the real supplied files. Each blocked file is named
 `.PLACEHOLDER` so it is obvious in the tree:
 
+(The motion stage's own media is real: `bg-{terrarium,vivarium,plants}.mp4/.webm/.jpg` and `wood-foreground.png` are the approved Higgsfield outputs, transcoded from the HEVC originals to H.264 and VP9 so every browser plays them.)
+
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |
 | `card-moss.PLACEHOLDER.jpg` | `17001:89` | The EcoStove card image. Currently a moss crop from the video. |
 | `about-terrarium.jpg` | Higgsfield job `512ad8e7` | Unused since the motion stage replaced the About section; kept for a possible return. |
-| `bg-terrarium.mp4` / `.jpg` | Higgsfield job `2593b480` (poster `ac1c369e`) | Approved studio background video for state 01. Currently a copy of the hero video. |
-| `bg-vivarium.mp4` / `.jpg` | Higgsfield job `a448a297` (poster `0d7ac156`) | Approved background video for state 02. Currently a copy of the hero video. |
-| `bg-plants.mp4` / `.jpg` | Higgsfield job `03b82ade` (poster `b33a69d4`) | Approved background video for state 03. Currently a copy of the hero video. |
-| `wood-foreground.png` | Higgsfield job `cab6432c`, version 1 | Approved transparent mossy driftwood drawn in front of the giant word. Currently a soft-masked moss crop with alpha, same 2688×1152 canvas. |
 | Icon SVGs | grid / play / burger | Redrawn from the reference screenshot in `hero-banner.tsx`; approximations, not the originals. |
 
 To resolve: export the assets from Figma and upload them into `public/media/`
