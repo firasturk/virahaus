@@ -14,8 +14,7 @@ import { figSpring } from "./motion";
  * Plants — and scrolling inside it switches them.
  *
  * Timings are the template's own keyframes (11.4s timeline, read from Figma):
- *   intro   background 1.36 -> 1 (spring), foreground slides in from -1100
- *           (spring), letters rise 100 -> -40 and fade in, 60ms apart (expo-out),
+ *   intro   background 1.36 -> 1 (spring), letters rise 100 -> -40 and fade in, 60ms apart (expo-out),
  *           title drops from -104 and copy rises from 64 (spring), footer items
  *           fade up 100ms apart
  *   exit    letters fall to +360 on [1,0,0,1], copy and footer leave the same way
@@ -23,8 +22,7 @@ import { figSpring } from "./motion";
  *           [0.15,0.52,0.5,1] and rise 100 -> 0 on [0.3,-1.2,0.45,1] (overshoot),
  *           100ms apart
  *
- * Layer order matches the template: video, haze, giant word, driftwood in front
- * of the word, copy, footer, cards.
+ * Layer order: video, haze, giant word, copy, footer, cards.
  */
 
 const EXPO = [0.16, 1, 0.3, 1] as const;
@@ -82,8 +80,7 @@ export default function MotionSection() {
 
   /* Slow parallax on the background against the pinned frame. */
   const bgY = useSpring(useTransform(scrollYProgress, [0, 1], ["0%", "-6%"]), { stiffness: 60, damping: 20 });
-  const woodX = useSpring(useTransform(scrollYProgress, [0, 1], ["0%", "-5%"]), { stiffness: 60, damping: 20 });
-
+  
   if (mobile) return <MobileStates />;
 
   const s = STATES[state];
@@ -110,9 +107,9 @@ export default function MotionSection() {
         <div className="rails" aria-hidden><span style={{ left: "25%", background: "var(--hair-dark)" }} /><span style={{ left: "50%", background: "var(--hair-dark)" }} /><span style={{ left: "75%", background: "var(--hair-dark)" }} /></div>
 
         {/* 3 · giant word */}
-        <div className="absolute inset-x-0 bottom-[15%] z-10 flex justify-center overflow-hidden">
+        <div className="absolute inset-x-0 bottom-[1%] z-10 flex justify-center overflow-hidden">
           <AnimatePresence mode="wait" initial={false}>
-            <motion.h2 key={s.word} className="display flex whitespace-nowrap leading-none text-ink/90" style={{ fontSize: `${Math.min(26, 150 / s.word.length)}cqw` }} aria-label={s.word}>
+            <motion.h2 key={s.word} className="display flex whitespace-nowrap leading-none text-white" style={{ fontSize: `${Math.min(26, 150 / s.word.length)}cqw` }} aria-label={s.word}>
               {Array.from(s.word).map((ch, i) => (
                 <motion.span key={i} aria-hidden className="inline-block"
                   initial={{ opacity: 0, y: "0.3em" }}
@@ -125,11 +122,6 @@ export default function MotionSection() {
             </motion.h2>
           </AnimatePresence>
         </div>
-
-        {/* 4 · driftwood in front of the word */}
-        <motion.div style={{ x: woodX }} className="pointer-events-none absolute bottom-[-6%] left-[-6%] z-20 w-[78%]" initial={{ x: -1100, opacity: 0 }} animate={intro ? { x: 0, opacity: 1 } : {}} transition={{ duration: 2, ease: figSpring }}>
-          <Image src="/media/wood-foreground.png" alt="" width={2688} height={1152} className="h-auto w-full" priority />
-        </motion.div>
 
         {/* 5 · copy */}
         <div className="absolute top-[19%] left-[3.6%] z-30 w-[26%]">
@@ -206,7 +198,7 @@ function MobileStates() {
             <div className="absolute inset-0 bg-gradient-to-t from-sand/70 via-sand/10 to-sand/40" />
             <div className="relative flex min-h-[100svh] flex-col justify-between p-6">
               <div><p className="kicker">0{i + 1}</p><h3 className="display mt-3 text-3xl">{s.title[0]}<br />{s.title[1]}</h3><p className="mt-4 max-w-sm text-sm text-ink/70">{s.copy}</p></div>
-              <div><p className="display text-[26vw] leading-none text-ink/90">{s.word}</p>
+              <div><p className="display text-[26vw] leading-none text-white">{s.word}</p>
                 <ul className="mt-3 flex gap-3 overflow-x-auto pb-2">{cards.map((p) => (<li key={p.slug} className="w-36 shrink-0"><Link href={`/product/${p.slug}`} className="relative block aspect-[4/5] overflow-hidden rounded-2xl bg-card"><Image src={p.images[0]} alt={p.name} fill sizes="144px" className="object-cover" /><p className="display absolute bottom-2 left-3 text-base text-white">{p.name}</p></Link></li>))}</ul>
               </div>
             </div>

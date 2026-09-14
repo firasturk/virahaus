@@ -123,8 +123,7 @@ Every timing is a custom property on `.stage`, so they can be retuned in one pla
 - `/` — hero, **Motion stage** (`#about`, `motion-section.tsx`): one pinned
   section after the GRIGOLETTO "Motion 01" template, rebuilt on the hero system.
   Scrolling inside it switches Terrarium → Vivarium → Plants: a background
-  video per state, the giant category word in Lexend Exa, a driftwood layer in
-  front of the word, copy, three product cards and the 01 / 02 / 03 footer.
+  video per state, the giant category word in white Lexend Exa, copy, three product cards and the 01 / 02 / 03 footer.
   Timings are the template's own keyframes (intro spring, expo-out letter
   rise, snap exit, overshoot card pop). Below 768px the three states stack.
   **Shop** (`#shop`), **Gifting** (`#gift`), footer.
@@ -165,7 +164,7 @@ The Figma assets are served from `www.figma.com`, which this build environment's
 network policy blocks, so two are still stand-ins. The fourteen product photos are the real supplied files. Each blocked file is named
 `.PLACEHOLDER` so it is obvious in the tree:
 
-(The motion stage's own media is real: `bg-{terrarium,vivarium,plants}.mp4/.webm/.jpg` and `wood-foreground.png` are the approved Higgsfield outputs, transcoded from the HEVC originals to H.264 and VP9 so every browser plays them.)
+(The motion stage's own media is real: `bg-{terrarium,vivarium,plants}.mp4/.webm/.jpg` are the approved Higgsfield outputs, transcoded from the HEVC originals to H.264 and VP9 so every browser plays them.)
 
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |
