@@ -15,14 +15,13 @@ import { figSpring } from "./motion";
  *
  * Timings are the template's own keyframes (11.4s timeline, read from Figma):
  *   intro   background 1.36 -> 1 (spring), letters rise 100 -> -40 and fade in, 60ms apart (expo-out),
- *           title drops from -104 and copy rises from 64 (spring), footer items
- *           fade up 100ms apart
- *   exit    letters fall to +360 on [1,0,0,1], copy and footer leave the same way
+ *           title drops from -104 and copy rises from 64 (spring)
+ *   exit    letters fall to +360 on [1,0,0,1], copy leaves the same way
  *   enter   next word rises as in the intro; cards pop 0.6 -> 1 on
  *           [0.15,0.52,0.5,1] and rise 100 -> 0 on [0.3,-1.2,0.45,1] (overshoot),
  *           100ms apart
  *
- * Layer order: video, haze, giant word, copy, footer, cards.
+ * Layer order: video, haze, category word, copy, cards.
  */
 
 const EXPO = [0.16, 1, 0.3, 1] as const;
@@ -31,24 +30,21 @@ const POP_OPACITY = [0.09, 0.55, 0.5, 1] as const;
 const POP_SCALE = [0.15, 0.52, 0.5, 1] as const;
 const POP_Y = [0.3, -1.2, 0.45, 1] as const;
 
-const STATES: { slug: CategorySlug; word: string; title: [string, string]; copy: string; footer: string }[] = [
+const STATES: { slug: CategorySlug; word: string; title: [string, string]; copy: string }[] = [
   {
     slug: "terrarium", word: "Terrarium",
     title: ["Sealed worlds", "that keep their own weather."],
     copy: "Glass, stone and moss, closed for good. It rains inside on its own, feeds on its own light, and asks for a mist once a month.",
-    footer: "Closed vessels that run themselves for years",
   },
   {
     slug: "vivarium", word: "Vivarium",
     title: ["Open, misted,", "alive."],
     copy: "A planted cork wall, a shallow pool, a bar of light and a fine mist on a timer. Built for the plants that need weather.",
-    footer: "Front-opening tanks with rain built in",
   },
   {
     slug: "plants", word: "Plants",
     title: ["Grown for glass,", "happy in humidity."],
     copy: "Small, patterned and slow — caladium, begonia, bromeliad, earth star — chosen because they thrive where the air stays wet.",
-    footer: "Ten species, each picked for life under glass",
   },
 ];
 
@@ -107,9 +103,9 @@ export default function MotionSection() {
         <div className="rails" aria-hidden><span style={{ left: "25%", background: "var(--hair-dark)" }} /><span style={{ left: "50%", background: "var(--hair-dark)" }} /><span style={{ left: "75%", background: "var(--hair-dark)" }} /></div>
 
         {/* 3 · giant word */}
-        <div className="absolute inset-x-0 bottom-[1%] z-10 flex justify-center overflow-hidden">
+        <div className="absolute bottom-[5%] left-[3.6%] z-10 overflow-hidden">
           <AnimatePresence mode="wait" initial={false}>
-            <motion.h2 key={s.word} className="display flex whitespace-nowrap leading-none text-white" style={{ fontSize: `${Math.min(26, 150 / s.word.length)}cqw` }} aria-label={s.word}>
+            <motion.h2 key={s.word} className="display flex whitespace-nowrap leading-none text-white" style={{ fontSize: `${Math.min(11, 95 / s.word.length)}cqw` }} aria-label={s.word}>
               {Array.from(s.word).map((ch, i) => (
                 <motion.span key={i} aria-hidden className="inline-block"
                   initial={{ opacity: 0, y: "0.3em" }}
@@ -172,15 +168,6 @@ export default function MotionSection() {
           </AnimatePresence>
         </div>
 
-        {/* 8 · footer 01 / 02 / 03 as progress */}
-        <ol className="absolute inset-x-[2.8%] bottom-[1.6%] z-50 grid grid-cols-3 gap-6 text-ink">
-          {STATES.map((st, i) => (
-            <motion.li key={st.slug} className="flex items-start gap-4" initial={{ opacity: 0, y: 20 }} animate={intro ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EXPO, delay: 0.8 + i * 0.1 }}>
-              <span className={`display text-[1.4cqw] tracking-[-0.06em] transition ${i === state ? "opacity-100" : "opacity-40"}`}>0{i + 1}</span>
-              <span className={`mt-[0.35cqw] max-w-[12cqw] text-[0.7cqw] leading-snug transition ${i === state ? "opacity-70" : "opacity-35"}`}>{st.footer}</span>
-            </motion.li>
-          ))}
-        </ol>
       </div>
     </section>
   );

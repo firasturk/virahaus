@@ -123,7 +123,7 @@ Every timing is a custom property on `.stage`, so they can be retuned in one pla
 - `/` — hero, **Motion stage** (`#about`, `motion-section.tsx`): one pinned
   section after the GRIGOLETTO "Motion 01" template, rebuilt on the hero system.
   Scrolling inside it switches Terrarium → Vivarium → Plants: a background
-  video per state, the giant category word in white Lexend Exa, copy, three product cards and the 01 / 02 / 03 footer.
+  video per state, the category word in white Lexend Exa, copy and three product cards.
   Timings are the template's own keyframes (intro spring, expo-out letter
   rise, snap exit, overshoot card pop). Below 768px the three states stack.
   **Shop** (`#shop`), **Gifting** (`#gift`), footer.
