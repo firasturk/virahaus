@@ -120,7 +120,14 @@ Every timing is a custom property on `.stage`, so they can be retuned in one pla
 
 ## Pages and sections
 
-- `/` — hero, **About** (`#about`), **Shop** (`#shop`), **Gifting** (`#gift`), footer.
+- `/` — hero, **Motion stage** (`#about`, `motion-section.tsx`): one pinned
+  section after the GRIGOLETTO "Motion 01" template, rebuilt on the hero system.
+  Scrolling inside it switches Terrarium → Vivarium → Plants: a background
+  video per state, the giant category word in Lexend Exa, a driftwood layer in
+  front of the word, copy, three product cards and the 01 / 02 / 03 footer.
+  Timings are the template's own keyframes (intro spring, expo-out letter
+  rise, snap exit, overshoot card pop). Below 768px the three states stack.
+  **Shop** (`#shop`), **Gifting** (`#gift`), footer.
 - `/product/[slug]` — product page: sticky gallery with cursor-following zoom and
   thumbnail crossfade, variant selector, magnetic *Add to cart*, full-bleed
   lifestyle image, spec tiles, drag-to-scroll *You may also like*. Statically
@@ -161,7 +168,11 @@ network policy blocks, so two are still stand-ins. The fourteen product photos a
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |
 | `card-moss.PLACEHOLDER.jpg` | `17001:89` | The EcoStove card image. Currently a moss crop from the video. |
-| `about-terrarium.jpg` | Higgsfield job `512ad8e7` | The generated "abstract 3D terrarium" render; its CDN is blocked here. Currently the terrarium-jar photo, which shares the brief's near-black ground. |
+| `about-terrarium.jpg` | Higgsfield job `512ad8e7` | Unused since the motion stage replaced the About section; kept for a possible return. |
+| `bg-terrarium.mp4` / `.jpg` | Higgsfield job `2593b480` (poster `ac1c369e`) | Approved studio background video for state 01. Currently a copy of the hero video. |
+| `bg-vivarium.mp4` / `.jpg` | Higgsfield job `a448a297` (poster `0d7ac156`) | Approved background video for state 02. Currently a copy of the hero video. |
+| `bg-plants.mp4` / `.jpg` | Higgsfield job `03b82ade` (poster `b33a69d4`) | Approved background video for state 03. Currently a copy of the hero video. |
+| `wood-foreground.png` | Higgsfield job `cab6432c`, version 1 | Approved transparent mossy driftwood drawn in front of the giant word. Currently a soft-masked moss crop with alpha, same 2688×1152 canvas. |
 | Icon SVGs | grid / play / burger | Redrawn from the reference screenshot in `hero-banner.tsx`; approximations, not the originals. |
 
 To resolve: export the assets from Figma and upload them into `public/media/`

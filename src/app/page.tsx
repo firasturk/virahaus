@@ -1,4 +1,4 @@
-import AboutSection from "@/components/about-section";
+import MotionSection from "@/components/motion-section";
 import GiftSection from "@/components/gift-section";
 import HeroBanner from "@/components/hero-banner";
 import ShopSection from "@/components/shop-section";
@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="flex-1">
       <HeroBanner />
-      <AboutSection />
+      <MotionSection />
       <ShopSection />
       <GiftSection />
       <SiteFooter />
