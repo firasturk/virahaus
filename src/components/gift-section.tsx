@@ -34,8 +34,10 @@ export default function GiftSection() {
 
   return (
     <section id="gift" className="relative overflow-hidden px-6 py-28 text-white sm:px-10 lg:py-40">
-      {/* The desk photo carries the section, as the driftwood carries the hero. */}
-      <Image src="/media/products/lifestyle-desk.jpg" alt="" fill sizes="100vw" className="object-cover" />
+      {/* The micro-world video carries the section, as the driftwood carries the hero. */}
+      <video className="absolute inset-0 h-full w-full object-cover" poster="/media/gift-micro.jpg" autoPlay muted loop playsInline preload="metadata" aria-hidden>
+        <source src="/media/gift-micro.webm" type="video/webm" /><source src="/media/gift-micro.mp4" type="video/mp4" />
+      </video>
       <div className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/25 to-ink/70" />
       <div className="rails" aria-hidden>
         <span style={{ left: "25%", background: "var(--hair-light)" }} /><span style={{ left: "50%", background: "var(--hair-light)" }} /><span style={{ left: "75%", background: "var(--hair-light)" }} />

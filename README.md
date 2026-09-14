@@ -164,7 +164,7 @@ The Figma assets are served from `www.figma.com`, which this build environment's
 network policy blocks, so two are still stand-ins. The fourteen product photos are the real supplied files. Each blocked file is named
 `.PLACEHOLDER` so it is obvious in the tree:
 
-(The motion stage's own media is real: `bg-{terrarium,vivarium,plants}.mp4/.webm/.jpg` are the approved Higgsfield outputs, transcoded from the HEVC originals to H.264 and VP9 so every browser plays them.)
+(The motion stage's own media is real: `bg-{terrarium,vivarium,plants}.mp4/.webm/.jpg` are the approved Higgsfield outputs, as are `gift-micro.*` (the gifting section background) and `vivarium-forest.*` (the lifestyle video on vivarium product pages), transcoded from the HEVC originals to H.264 and VP9 so every browser plays them.)
 
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |

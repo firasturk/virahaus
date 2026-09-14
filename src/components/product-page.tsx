@@ -103,7 +103,13 @@ export default function ProductPage({ product, related }: { product: Product; re
 
       {/* Full-bleed lifestyle, type on imagery in white like the hero. */}
       <section className="relative h-[70vh] min-h-[420px] w-full overflow-hidden">
-        <Image src={product.images[1] ?? product.images[0]} alt="" fill sizes="100vw" className="object-cover" />
+        {product.category === "vivarium" ? (
+          <video className="absolute inset-0 h-full w-full object-cover" poster="/media/vivarium-forest.jpg" autoPlay muted loop playsInline preload="metadata" aria-hidden>
+            <source src="/media/vivarium-forest.webm" type="video/webm" /><source src="/media/vivarium-forest.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          <Image src={product.images[1] ?? product.images[0]} alt="" fill sizes="100vw" className="object-cover" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-ink/10" />
         <div className="absolute inset-x-0 bottom-0 px-6 pb-14 sm:px-10">
           <p className="display mx-auto max-w-7xl text-[clamp(1.8rem,3.4vw,3rem)] text-white">
