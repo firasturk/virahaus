@@ -5,23 +5,21 @@ import type { CSSProperties } from "react";
 import { CartButton } from "./cart";
 import CursorReveal from "./cursor-reveal";
 import ScrollReveal from "./scroll-reveal";
+import { MenuButton } from "./site-menu";
+import SoundButton from "./sound-button";
+import { getProduct } from "@/data/products";
 import styles from "./hero-banner.module.css";
 
 /*
  * Assets
  * ------
  * hero-bare.jpg, the wordmark, the video and its poster are the real supplied
- * assets.
- *
- * One Figma image is still a stand-in: it lives behind figma.com, which this
- * environment's egress policy blocks. It is named .PLACEHOLDER so it is obvious
- * in the tree which file still needs the real export:
- *
- *   card-moss.PLACEHOLDER.jpg  -> Figma node 17001:89 (the EcoStove card image)
+ * assets. The card that rises on the first scroll is the template's EcoStove
+ * slot, filled with a featured piece from the catalogue.
  */
 const BARE_STILL = "/media/hero-bare.jpg";
-const CARD_IMAGE = "/media/card-moss.PLACEHOLDER.jpg";
 const LOGO = "/media/VIRA-HAUS-logo.png";
+const FEATURED = getProduct("ember-jar")!;
 
 const ALIVE_POSTER = "/media/hero-alive-poster.jpg";
 const ALIVE_WEBM = "/media/hero-alive.webm";
@@ -46,14 +44,6 @@ function GridGlyph() {
           />
         )),
       )}
-    </svg>
-  );
-}
-
-function PlayGlyph() {
-  return (
-    <svg viewBox="0 0 17 17" fill="none" aria-hidden>
-      <path d="M4.8 1.9 14.4 8.5 4.8 15.1Z" fill="currentColor" />
     </svg>
   );
 }
@@ -128,8 +118,8 @@ export default function HeroBanner() {
             playsInline
             preload="auto"
           >
-            <source src={ALIVE_WEBM} type="video/webm" />
             <source src={ALIVE_MP4} type="video/mp4" />
+            <source src={ALIVE_WEBM} type="video/webm" />
           </video>
         }
       >
@@ -171,9 +161,9 @@ export default function HeroBanner() {
             <CartButton tone="light" />
           </div>
 
-          <button className={styles.burger} type="button" aria-label="Open menu">
+          <MenuButton className={styles.burger}>
             <BurgerGlyph />
-          </button>
+          </MenuButton>
 
           <h1 className={styles.headline} aria-label="Find your inner green">
             <Glyphs text="Find your" />
@@ -188,18 +178,14 @@ export default function HeroBanner() {
             </span>
           </p>
 
-          <button className={styles.pill} type="button">
+          <Link className={styles.pill} href="/#shop">
             <span className={styles.pillIcon}>
               <GridGlyph />
             </span>
             Our Products
-          </button>
+          </Link>
 
-          <button className={styles.play} type="button" aria-label="Play showreel">
-            <span className={styles.playInner}>
-              <PlayGlyph />
-            </span>
-          </button>
+          <SoundButton className={styles.play} innerClassName={styles.playInner} />
 
           {/* Only a mouse can reveal the moss, so only a mouse is told. Fades on the first move. */}
           <p className={styles.hint}>
@@ -215,20 +201,20 @@ export default function HeroBanner() {
 
           {/* Hidden on first paint; enters once the visitor scrolls down. */}
           <ScrollReveal>
-            <article className={styles.card}>
+            <Link href={`/product/${FEATURED.slug}`} className={styles.card} aria-label={`View ${FEATURED.name}`}>
               <Image
-                src={CARD_IMAGE}
+                src={FEATURED.images[0]}
                 alt=""
                 width={880}
                 height={588}
                 className={styles.cardImage}
               />
-              <p className={styles.cardKicker}>EcoStove</p>
-              <p className={styles.cardTitle}>Heat for Life</p>
-              <button className={styles.cardButton} type="button" aria-label="View EcoStove">
+              <p className={styles.cardKicker}>Featured</p>
+              <p className={styles.cardTitle}>{FEATURED.name}</p>
+              <span className={styles.cardButton} aria-hidden>
                 <GridGlyph />
-              </button>
-            </article>
+              </span>
+            </Link>
           </ScrollReveal>
         </div>
       </CursorReveal>

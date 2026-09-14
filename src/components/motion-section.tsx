@@ -98,7 +98,7 @@ export default function MotionSection() {
           <motion.div key={s.slug} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.2, ease: EXPO }}>
             <motion.div style={{ y: bgY }} className="absolute inset-[-6%_0]" initial={{ scale: 1.36 }} animate={intro ? { scale: 1 } : { scale: 1.36 }} transition={{ duration: 2, ease: figSpring }}>
               <video className="h-full w-full object-cover" poster={`/media/bg-${s.slug}.jpg`} autoPlay muted loop playsInline preload="metadata">
-                <source src={`/media/bg-${s.slug}.webm`} type="video/webm" /><source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" />
+                <source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" /><source src={`/media/bg-${s.slug}.webm`} type="video/webm" />
               </video>
             </motion.div>
           </motion.div>
@@ -202,7 +202,7 @@ function MobileStates() {
         const cards = products.filter((p) => p.category === s.slug).slice(0, 3);
         return (
           <div key={s.slug} className="relative min-h-[100svh] overflow-hidden">
-            <video className="absolute inset-0 h-full w-full object-cover" poster={`/media/bg-${s.slug}.jpg`} autoPlay muted loop playsInline preload="metadata"><source src={`/media/bg-${s.slug}.webm`} type="video/webm" /><source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" /></video>
+            <video className="absolute inset-0 h-full w-full object-cover" poster={`/media/bg-${s.slug}.jpg`} autoPlay muted loop playsInline preload="metadata"><source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" /><source src={`/media/bg-${s.slug}.webm`} type="video/webm" /></video>
             <div className="absolute inset-0 bg-gradient-to-t from-sand/70 via-sand/10 to-sand/40" />
             <div className="relative flex min-h-[100svh] flex-col justify-between p-6">
               <div><p className="kicker">0{i + 1}</p><h3 className="display mt-3 text-3xl">{s.title[0]}<br />{s.title[1]}</h3><p className="mt-4 max-w-sm text-sm text-ink/70">{s.copy}</p></div>

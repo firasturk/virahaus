@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 
 import { formatPrice } from "@/data/products";
+import { whatsappUrl } from "@/lib/contact";
 
 export interface CartLine {
   key: string;
@@ -97,6 +98,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 }
 
+function WhatsAppGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
+      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 1.8a8.2 8.2 0 1 1-4.2 15.3l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 0 1 12 3.8Zm-3.3 4.4c-.2 0-.5 0-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5 0 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3l-2-.9c-.3-.1-.5-.2-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.4-.5-.6-.5Z" />
+    </svg>
+  );
+}
+
 export function useCart() {
   const ctx = useContext(CartContext);
   if (!ctx) throw new Error("useCart must be used inside CartProvider");
@@ -121,8 +130,21 @@ export function CartButton({ tone = "light", className = "" }: { tone?: "light" 
   );
 }
 
+/* The order goes out as a WhatsApp message: every line, the total, and the gift note if any. */
+function orderText(lines: CartLine[], total: number, gift: { on: boolean; to: string; note: string }) {
+  const rows = lines.map((l) => `• ${l.name} (${l.variant}) ×${l.qty} — ${formatPrice(l.price * l.qty)}`);
+  const parts = ["Hi ViraHaus, I'd like to order:", "", ...rows, "", `Total: ${formatPrice(total)}`];
+  if (gift.on) {
+    parts.push("", "This is a gift.");
+    if (gift.to.trim()) parts.push(`For: ${gift.to.trim()}`);
+    if (gift.note.trim()) parts.push(`Handwritten note: "${gift.note.trim()}"`);
+  }
+  return parts.join("\n");
+}
+
 function CartDrawer() {
   const { lines, total, open, setOpen, remove, setQty } = useCart();
+  const [gift, setGift] = useState({ on: false, to: "", note: "" });
 
   useEffect(() => {
     if (!open) return;
@@ -194,14 +216,35 @@ function CartDrawer() {
             </div>
 
             <footer className="border-t border-[var(--hair-dark)] px-6 py-5">
+              {lines.length > 0 && (
+                <div className="mb-5">
+                  <label className="flex cursor-pointer items-center gap-3 text-sm">
+                    <input type="checkbox" checked={gift.on} onChange={(e) => setGift({ ...gift, on: e.target.checked })} className="h-4 w-4 accent-[#753319]" />
+                    This is a gift
+                  </label>
+                  {gift.on && (
+                    <div className="mt-3 space-y-2">
+                      <input value={gift.to} onChange={(e) => setGift({ ...gift, to: e.target.value })} placeholder="Who is it for?" className="h-10 w-full rounded-full border border-ink/25 bg-transparent px-4 text-sm outline-none placeholder:text-ink/40 focus:border-ink" />
+                      <textarea value={gift.note} onChange={(e) => setGift({ ...gift, note: e.target.value })} placeholder="A short note — we write it by hand and tuck it in." rows={2} className="w-full resize-none rounded-2xl border border-ink/25 bg-transparent px-4 py-2 text-sm outline-none placeholder:text-ink/40 focus:border-ink" />
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="mb-4 flex items-baseline justify-between">
                 <span className="kicker">Subtotal</span>
                 <span className="display text-2xl tabular-nums">{formatPrice(total)}</span>
               </div>
-              <button type="button" disabled={lines.length === 0} className="h-12 w-full rounded-full bg-ink text-sm text-sand transition hover:bg-black disabled:opacity-40">
-                Checkout
-              </button>
-              <p className="mt-3 text-center text-[0.7rem] text-rust">Nothing charged until it ships.</p>
+              <a
+                href={lines.length ? whatsappUrl(orderText(lines, total, gift)) : undefined}
+                target="_blank"
+                rel="noopener"
+                aria-disabled={lines.length === 0}
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-ink text-sm text-sand transition hover:bg-black aria-disabled:pointer-events-none aria-disabled:opacity-40"
+              >
+                <WhatsAppGlyph />
+                Order on WhatsApp
+              </a>
+              <p className="mt-3 text-center text-[0.7rem] text-rust">We confirm on WhatsApp. Nothing charged until it ships.</p>
             </footer>
           </motion.aside>
         </>

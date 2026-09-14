@@ -105,7 +105,7 @@ export default function ProductPage({ product, related }: { product: Product; re
       <section className="relative h-[70vh] min-h-[420px] w-full overflow-hidden">
         {product.category === "vivarium" ? (
           <video className="absolute inset-0 h-full w-full object-cover" poster="/media/vivarium-forest.jpg" autoPlay muted loop playsInline preload="metadata" aria-hidden>
-            <source src="/media/vivarium-forest.webm" type="video/webm" /><source src="/media/vivarium-forest.mp4" type="video/mp4" />
+            <source src="/media/vivarium-forest.mp4" type="video/mp4" /><source src="/media/vivarium-forest.webm" type="video/webm" />
           </video>
         ) : (
           <Image src={product.images[1] ?? product.images[0]} alt="" fill sizes="100vw" className="object-cover" />
