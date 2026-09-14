@@ -197,16 +197,16 @@ export default function MotionSection() {
 /* Below 768px the pin is dropped and the three states stack, each with its own video. */
 function MobileStates() {
   return (
-    <section id="about" className="bg-sand text-white">
+    <section id="about" className="bg-sand text-ink">
       {STATES.map((s, i) => {
         const cards = products.filter((p) => p.category === s.slug).slice(0, 3);
         return (
           <div key={s.slug} className="relative min-h-[100svh] overflow-hidden">
             <video className="absolute inset-0 h-full w-full object-cover" poster={`/media/bg-${s.slug}.jpg`} autoPlay muted loop playsInline preload="metadata"><source src={`/media/bg-${s.slug}.mp4`} type="video/mp4" /></video>
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-sand/10 to-sand/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-sand/70 via-sand/10 to-sand/40" />
             <div className="relative flex min-h-[100svh] flex-col justify-between p-6">
-              <div><p className="kicker !text-white/70">0{i + 1}</p><h3 className="display mt-3 text-3xl">{s.title[0]}<br />{s.title[1]}</h3><p className="mt-4 max-w-sm text-sm text-white/80">{s.copy}</p></div>
-              <div><p className="display text-[26vw] leading-none opacity-90">{s.word}</p>
+              <div><p className="kicker">0{i + 1}</p><h3 className="display mt-3 text-3xl">{s.title[0]}<br />{s.title[1]}</h3><p className="mt-4 max-w-sm text-sm text-ink/70">{s.copy}</p></div>
+              <div><p className="display text-[26vw] leading-none text-ink/90">{s.word}</p>
                 <ul className="mt-3 flex gap-3 overflow-x-auto pb-2">{cards.map((p) => (<li key={p.slug} className="w-36 shrink-0"><Link href={`/product/${p.slug}`} className="relative block aspect-[4/5] overflow-hidden rounded-2xl bg-card"><Image src={p.images[0]} alt={p.name} fill sizes="144px" className="object-cover" /><p className="display absolute bottom-2 left-3 text-base text-white">{p.name}</p></Link></li>))}</ul>
               </div>
             </div>
