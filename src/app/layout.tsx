@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { CartProvider } from "@/components/cart";
 import { MenuOverlay } from "@/components/site-menu";
+import AutoplayVideos from "@/components/autoplay-videos";
 
 const lexend = Lexend({ variable: "--font-lexend", subsets: ["latin"] });
 const lexendExa = Lexend_Exa({ variable: "--font-lexend-exa", subsets: ["latin"] });
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CartProvider>
           {children}
           <MenuOverlay />
+          <AutoplayVideos />
         </CartProvider>
       </body>
     </html>
