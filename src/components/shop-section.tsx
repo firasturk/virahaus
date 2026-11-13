@@ -29,9 +29,9 @@ export default function ShopSection() {
   }, []);
 
   return (
-    <section id="shop" className="relative scroll-mt-4 bg-sand-2 px-5 py-20 text-ink sm:px-10 lg:py-28">
+    <section id="shop" className="relative scroll-mt-4 bg-sand px-5 py-20 text-ink sm:px-10 lg:py-28">
       <div className="mx-auto max-w-7xl">
-        <SectionHead kicker="Shop" title="Everything we grow." lede="Tap + to add the standard size, or open a piece to choose another." />
+        <SectionHead kicker="Shop" title="Everything we grow." lede="Jars and plants are ready now. Large tanks are pre-order, ready two weeks after we confirm. Tap + to add the standard size." />
 
         {/* The hero's "Our Products" pill, one per category. */}
         <div role="tablist" aria-label="Filter by category" className="-mx-5 mt-10 flex gap-3 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">

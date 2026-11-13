@@ -9,13 +9,13 @@ import { ShopLink } from "./shop-filter";
 
 /* Eight short lines that answer a gift-giver's doubts; one shows at a time. */
 export const GIFT_MICROCOPY = [
-  "No account needed — order on WhatsApp in a minute.",
+  "No watering, ever. It only needs light.",
+  "Handmade, one at a time.",
   "A handwritten note, included at no cost.",
+  "Jars and plants are ready now.",
   "Tell us the day. We'll deliver it then.",
-  "Care guide in the box. No green thumb required.",
-  "Free replacement if it arrives damaged.",
+  "No account needed — order on WhatsApp in a minute.",
   "Not sure what to pick? Ask us on WhatsApp.",
-  "Packed to travel, handed over with care.",
   "Nothing to pay until we've confirmed it with you.",
 ];
 
@@ -43,14 +43,14 @@ export default function GiftSection() {
         </h2>
         <Reveal delay={0.2}>
           <p className="mx-auto mt-6 max-w-lg text-[1.05rem] leading-relaxed text-white/85">
-            Flowers last a week. A sealed world keeps going for years — and every time it rains inside the glass, they&apos;ll think of you.
+            Flowers last a week. A handmade sealed jar keeps living for years with nothing but light — and every time it rains inside the glass, they&apos;ll think of you.
           </p>
         </Reveal>
 
         <Reveal delay={0.3} className="mt-9 flex flex-col items-center">
-          <ShopLink to="all" className="pill-light">
+          <ShopLink to="terrarium" className="pill-light">
             <span className="dot"><span className="h-1.5 w-1.5 rounded-full bg-white" /></span>
-            Choose a gift
+            Choose a no-care gift
           </ShopLink>
           <div className="relative mt-5 h-6 w-full max-w-md" aria-live="polite">
             <AnimatePresence mode="wait">

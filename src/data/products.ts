@@ -18,7 +18,18 @@ export interface Product {
   images: string[];
   variants: { name: string; options: { label: string; delta: number }[] };
   specs: { label: string; value: string }[];
+  /** Built after the order is confirmed. Defaults to true for vivariums (the large tanks). */
+  preorder?: boolean;
 }
+
+/* Jars and plants are on the shelf; the large tanks are built for each order. */
+export const PREORDER_WEEKS = 2;
+export const isPreorder = (p: Product) => p.preorder ?? p.category === "vivarium";
+export const availabilityLabel = (p: Product) => (isPreorder(p) ? `Pre-order · ${PREORDER_WEEKS} weeks` : "Ready now");
+export const availabilityLine = (p: Product) =>
+  isPreorder(p)
+    ? `Pre-order — built by hand for you, ready ${PREORDER_WEEKS} weeks after we confirm your order.`
+    : "Ready now — delivered as soon as we confirm your order.";
 
 const P = "/media/products";
 
@@ -26,19 +37,19 @@ export const categories: Category[] = [
   {
     slug: "terrarium",
     name: "Terrariums",
-    blurb: "Sealed worlds. Glass, stone, moss — and nothing else to do.",
+    blurb: "Handmade and sealed. No watering — just light. Ready now.",
     image: `${P}/terrarium-jar.jpg`,
   },
   {
     slug: "vivarium",
     name: "Vivariums",
-    blurb: "Open, misted, alive. Built for the plants that need weather.",
+    blurb: "Planted tanks with their own rain. Pre-order, ready in 2 weeks.",
     image: `${P}/vivarium-tank.jpg`,
   },
   {
     slug: "plants",
     name: "Plants",
-    blurb: "Grown for glass. Small, patterned, and happy in humidity.",
+    blurb: "Small, patterned, happy in humidity. Ready now.",
     image: `${P}/caladium.jpg`,
   },
 ];
@@ -51,7 +62,7 @@ export const products: Product[] = [
     price: 170,
     tagline: "A lava-rock ridge under a single cold light.",
     description:
-      "Black volcanic stone stacked into a ridge, dressed in cushion moss and a maidenhair fern, sealed inside a hand-blown vessel with a lamp built into its cap. It runs its own weather. You mist it once a month and otherwise leave it alone.",
+      "Black volcanic stone stacked into a ridge, dressed in cushion moss and a maidenhair fern, sealed inside a hand-blown vessel with a lamp built into its cap. Planted and sealed by hand, it runs its own weather: no watering, no feeding. Give it light and leave it alone.",
     images: [`${P}/terrarium-jar.jpg`, `${P}/lifestyle-desk.jpg`, `${P}/vivarium-tank.jpg`],
     variants: {
       name: "Size",
@@ -65,8 +76,8 @@ export const products: Product[] = [
       { label: "Vessel", value: "Hand-blown borosilicate, 42 cm" },
       { label: "Light", value: "Integrated 6500K LED cap, 8h timer" },
       { label: "Substrate", value: "Lava rock, sphagnum, drainage layer" },
-      { label: "Care", value: "Mist monthly. Indirect light." },
-      { label: "Includes", value: "Care guide, mister, tweezers" },
+      { label: "Care", value: "None. Sealed — it only needs light." },
+      { label: "Made", value: "By hand, one at a time" },
     ],
   },
   {
@@ -76,7 +87,7 @@ export const products: Product[] = [
     price: 130,
     tagline: "A cylinder of rain that never quite stops.",
     description:
-      "Tall glass, condensation on the walls, a column of moss and creeping fig climbing a spine of cork. Sits under its own hood light so it reads like a lantern on a desk after dark.",
+      "Tall glass, condensation on the walls, a column of moss and creeping fig climbing a spine of cork. Sits under its own hood light so it reads like a lantern on a desk after dark. Sealed by hand; it waters itself.",
     images: [`${P}/lifestyle-desk.jpg`, `${P}/terrarium-jar.jpg`],
     variants: {
       name: "Height",
@@ -89,7 +100,8 @@ export const products: Product[] = [
       { label: "Vessel", value: "Seeded glass cylinder, 30 cm" },
       { label: "Light", value: "Hood lamp, warm 3000K" },
       { label: "Planting", value: "Creeping fig, pillow moss, cork spine" },
-      { label: "Care", value: "Sealed. Open once a season." },
+      { label: "Care", value: "None. Sealed — it only needs light." },
+      { label: "Made", value: "By hand, one at a time" },
     ],
   },
   {
@@ -99,13 +111,14 @@ export const products: Product[] = [
     price: 115,
     tagline: "Fog in a jar.",
     description:
-      "A low, wide cylinder built around a single piece of driftwood, carpeted in moss and lit from above. The quietest thing in the range.",
+      "A low, wide cylinder built around a single piece of driftwood, carpeted in moss and lit from above. The quietest thing in the range, and the easiest: sealed by hand, it needs nothing but light.",
     images: [`${P}/lifestyle-desk.jpg`, `${P}/vivarium-tank.jpg`],
     variants: { name: "Finish", options: [{ label: "Clear", delta: 0 }, { label: "Seeded", delta: 14 }] },
     specs: [
       { label: "Vessel", value: "Cylinder, 24 cm" },
       { label: "Planting", value: "Driftwood, sheet moss, ferns" },
-      { label: "Care", value: "Sealed. Indirect light." },
+      { label: "Care", value: "None. Sealed — it only needs light." },
+      { label: "Made", value: "By hand, one at a time" },
     ],
   },
   {
@@ -153,7 +166,7 @@ export const products: Product[] = [
       { label: "Cabinet", value: "Matte black, ventilated" },
       { label: "Light", value: "4 × spot, programmable dawn/dusk" },
       { label: "Misting", value: "Rain bar, reservoir in base" },
-      { label: "Lead time", value: "6–8 weeks, installed" },
+      { label: "Lead time", value: "Pre-order · ready 2 weeks after confirmation" },
     ],
   },
   {

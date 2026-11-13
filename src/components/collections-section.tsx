@@ -13,7 +13,7 @@ export default function CollectionsSection() {
         <SectionHead
           kicker="Collections"
           title={<>Three ways to keep<br className="hidden sm:block" /> something alive.</>}
-          lede="Sealed jars that look after themselves, misted tanks with their own rain, and the small plants that love both."
+          lede="Handmade sealed jars that need no care, planted tanks with their own rain, and the small plants that love both."
         />
 
         <div className="-mx-5 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0">

@@ -20,8 +20,10 @@ type MenuLink = { label: string; href?: string; shop?: ShopFilter };
 const LINKS: MenuLink[] = [
   { label: "Shop all", shop: "all" },
   ...categories.map((c) => ({ label: c.name, shop: c.slug as ShopFilter })),
+  { label: "No-care gifts", href: "/#ecosystem" },
   { label: "How to order", href: "/#about" },
   { label: "Gifting", href: "/#gift" },
+  { label: "Aquariums", href: "/#aquariums" },
   { label: "Contact", href: "/#contact" },
 ];
 

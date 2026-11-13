@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { categories, formatPrice, type Product } from "@/data/products";
+import { availabilityLabel, categories, formatPrice, isPreorder, type Product } from "@/data/products";
 import { useCart } from "./cart";
 
 /*
@@ -28,6 +28,9 @@ export default function ProductCard({ product, sizes = "(min-width: 1024px) 25vw
             className="object-cover transition duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
           />
         </Link>
+        <span className={`pointer-events-none absolute top-3 left-3 rounded-full px-3 py-1 text-[0.7rem] tracking-wide ${isPreorder(product) ? "bg-ink text-sand" : "bg-white/90 text-ink"}`}>
+          {availabilityLabel(product)}
+        </span>
         <button
           type="button"
           onClick={() => add({ slug: product.slug, name: product.name, variant: first.label, price: product.price + first.delta, image: product.images[0] })}

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 
-import { formatPrice } from "@/data/products";
+import { formatPrice, getProduct, isPreorder, PREORDER_WEEKS } from "@/data/products";
 import { whatsappUrl } from "@/lib/contact";
 
 export interface CartLine {
@@ -132,7 +132,8 @@ export function CartButton({ tone = "light", className = "" }: { tone?: "light" 
 
 /* The order goes out as a WhatsApp message: every line, the total, and the gift note if any. */
 function orderText(lines: CartLine[], total: number, gift: { on: boolean; to: string; note: string }) {
-  const rows = lines.map((l) => `• ${l.name} (${l.variant}) ×${l.qty} — ${formatPrice(l.price * l.qty)}`);
+  const pre = (slug: string) => { const p = getProduct(slug); return p ? isPreorder(p) : false; };
+  const rows = lines.map((l) => `• ${l.name} (${l.variant}) ×${l.qty} — ${formatPrice(l.price * l.qty)}${pre(l.slug) ? ` — pre-order, ready in ${PREORDER_WEEKS} weeks` : " — ready now"}`);
   const parts = ["Hi ViraHaus, I'd like to order:", "", ...rows, "", `Total: ${formatPrice(total)}`];
   if (gift.on) {
     parts.push("", "This is a gift.");
@@ -205,6 +206,7 @@ function CartDrawer() {
                           {l.name}
                         </Link>
                         <span className="text-xs text-rust">{l.variant}</span>
+                        <span className="text-[0.7rem] text-ink/55">{(() => { const p = getProduct(l.slug); return p && isPreorder(p) ? `Pre-order · ready ${PREORDER_WEEKS} weeks after confirmation` : "Ready now"; })()}</span>
                         <div className="mt-auto flex items-center justify-between">
                           <div className="inline-flex items-center rounded-full border border-ink/25">
                             <button type="button" onClick={() => setQty(l.key, l.qty - 1)} className="h-7 w-7 opacity-70 hover:opacity-100" aria-label="Decrease">−</button>

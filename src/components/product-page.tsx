@@ -4,18 +4,13 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
-import { categories, formatPrice, type Product } from "@/data/products";
+import { availabilityLine, categories, formatPrice, isPreorder, PREORDER_WEEKS, type Product } from "@/data/products";
 import { whatsappUrl } from "@/lib/contact";
 import { useCart } from "./cart";
 import ProductCard from "./product-card";
 import Reveal from "./reveal";
 import { ShopLink } from "./shop-filter";
 
-const PROMISES = [
-  "Ordered on WhatsApp — confirmed with you before anything is charged",
-  "Care guide included in the box",
-  "Gift note available at checkout",
-];
 
 export default function ProductPage({ product, related }: { product: Product; related: Product[] }) {
   const { add } = useCart();
@@ -24,11 +19,18 @@ export default function ProductPage({ product, related }: { product: Product; re
   const [qty, setQty] = useState(1);
 
   const category = categories.find((c) => c.slug === product.category)!;
+  const preorder = isPreorder(product);
+  const promises = [
+    "Handmade, one at a time",
+    product.category === "terrarium" ? "No care — a sealed ecosystem that only needs light" : null,
+    "Ordered on WhatsApp — confirmed with you before anything is charged",
+    "Gift note available at checkout",
+  ].filter(Boolean) as string[];
   const option = product.variants.options[variant];
   const price = product.price + option.delta;
 
   const addToCart = () => add({ slug: product.slug, name: product.name, variant: option.label, price, image: product.images[0] }, qty);
-  const orderNow = whatsappUrl(`Hi ViraHaus, I'd like to order:\n\n• ${product.name} (${option.label}) ×${qty} — ${formatPrice(price * qty)}`);
+  const orderNow = whatsappUrl(`Hi ViraHaus, I'd like to ${preorder ? "pre-order" : "order"}:\n\n• ${product.name} (${option.label}) ×${qty} — ${formatPrice(price * qty)}${preorder ? ` — pre-order, ready in ${PREORDER_WEEKS} weeks` : ""}`);
 
   return (
     <div className="bg-sand text-ink">
@@ -76,6 +78,10 @@ export default function ProductPage({ product, related }: { product: Product; re
             {product.latin && <p className="mt-1 text-sm text-ink/55 italic">{product.latin}</p>}
             <p className="mt-5 text-[1.05rem] leading-relaxed text-ink/70">{product.tagline}</p>
             <p className="display mt-6 text-[2rem] tracking-[-0.08em] tabular-nums">{formatPrice(price)}</p>
+            <p className={`mt-3 flex items-start gap-2.5 rounded-2xl px-4 py-3 text-sm ${preorder ? "bg-ink text-sand" : "bg-card text-ink"}`}>
+              <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${preorder ? "bg-sand" : "bg-[#3f7a3a]"}`} aria-hidden />
+              {availabilityLine(product)}
+            </p>
 
             {product.variants.options.length > 1 && (
               <fieldset className="mt-8">
@@ -104,15 +110,15 @@ export default function ProductPage({ product, related }: { product: Product; re
                 <button type="button" onClick={() => setQty((q) => q + 1)} className="h-14 w-12 text-lg opacity-70 hover:opacity-100" aria-label="Increase quantity">+</button>
               </div>
               <button type="button" onClick={addToCart} className="h-14 flex-1 rounded-full bg-ink text-[0.95rem] text-sand transition hover:bg-black">
-                Add to cart · {formatPrice(price * qty)}
+                {preorder ? "Pre-order" : "Add to cart"} · {formatPrice(price * qty)}
               </button>
             </div>
             <a href={orderNow} target="_blank" rel="noopener" className="mt-3 flex h-14 items-center justify-center rounded-full border border-ink/30 text-[0.95rem] transition hover:border-ink">
-              Order this now on WhatsApp
+              {preorder ? "Pre-order on WhatsApp" : "Order this now on WhatsApp"}
             </a>
 
             <ul className="mt-8 space-y-3 border-t border-[var(--hair-dark)] pt-6 text-sm text-ink/70">
-              {PROMISES.map((t) => (
+              {promises.map((t) => (
                 <li key={t} className="flex gap-3">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rust" aria-hidden />
                   {t}
@@ -169,9 +175,9 @@ export default function ProductPage({ product, related }: { product: Product; re
       <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-4 border-t border-[var(--hair-dark)] bg-sand/95 px-5 py-3 backdrop-blur lg:hidden">
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm">{product.name}</p>
-          <p className="text-sm tabular-nums text-ink/60">{formatPrice(price)}</p>
+          <p className="text-sm tabular-nums text-ink/60">{formatPrice(price)}{preorder ? ` · pre-order ${PREORDER_WEEKS} weeks` : " · ready now"}</p>
         </div>
-        <button type="button" onClick={addToCart} className="h-12 rounded-full bg-ink px-6 text-sm text-sand">Add to cart</button>
+        <button type="button" onClick={addToCart} className="h-12 rounded-full bg-ink px-6 text-sm text-sand">{preorder ? "Pre-order" : "Add to cart"}</button>
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ export default function SiteFooter() {
             <ShopLink to="plants" className="text-rust hover:text-ink">Plants</ShopLink>
             <Link href="/#gift" className="text-rust hover:text-ink">Gifting</Link>
             <Link href="/#about" className="text-rust hover:text-ink">How to order</Link>
+            <Link href="/#aquariums" className="text-rust hover:text-ink">Custom aquariums</Link>
           </div>
           <div className="flex flex-col gap-2">
             <span className="kicker">Contact</span>

@@ -1,5 +1,7 @@
+import AquariumBand from "@/components/aquarium-band";
 import CollectionsSection from "@/components/collections-section";
 import ContactBand from "@/components/contact-band";
+import EcosystemSection from "@/components/ecosystem-section";
 import GiftSection from "@/components/gift-section";
 import HeroBanner from "@/components/hero-banner";
 import HowToOrder from "@/components/how-to-order";
@@ -13,9 +15,11 @@ export default function Home() {
       <StartAtTop />
       <HeroBanner />
       <CollectionsSection />
+      <EcosystemSection />
       <ShopSection />
       <HowToOrder />
       <GiftSection />
+      <AquariumBand />
       <ContactBand />
       <SiteFooter />
     </main>
