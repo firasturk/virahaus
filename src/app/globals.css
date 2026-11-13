@@ -98,3 +98,18 @@ body {
 .rails > span { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--hair-dark); }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/*
+ * Arabic pages: Readex Pro throughout, and no letter-spacing. Tracking breaks
+ * the joins between Arabic letters, so every tracking rule is neutralised.
+ */
+.font-ar,
+.font-ar .display {
+  font-family: var(--font-readex), var(--font-lexend), sans-serif;
+}
+.font-ar,
+.font-ar * {
+  letter-spacing: 0 !important;
+}
+.font-ar .display { font-weight: 500; line-height: 1.25; }
+.font-ar .kicker { text-transform: none; font-size: 0.85rem; }

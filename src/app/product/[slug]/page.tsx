@@ -14,7 +14,14 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const product = getProduct((await params).slug);
-  return product ? { title: product.name, description: product.tagline } : {};
+  return product
+    ? {
+        title: product.name,
+        description: product.tagline,
+        alternates: { languages: { en: `/product/${product.slug}`, ar: `/ar/product/${product.slug}` } },
+        openGraph: { title: `${product.name} — ViraHaus`, description: product.tagline, images: [{ url: product.images[0] }] },
+      }
+    : {};
 }
 
 export default async function Page({ params }: { params: Params }) {
@@ -22,7 +29,7 @@ export default async function Page({ params }: { params: Params }) {
   if (!product) notFound();
   return (
     <main className="relative flex-1 bg-sand pb-[72px] lg:pb-0">
-      <SiteHeader />
+      <SiteHeader switchHref={`/ar/product/${product.slug}`} switchLabel="العربية" />
       <ProductPage product={product} related={getRelated(product, 4)} />
       <SiteFooter />
     </main>

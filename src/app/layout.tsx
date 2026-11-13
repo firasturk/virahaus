@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lexend, Lexend_Exa } from "next/font/google";
+import { Lexend, Lexend_Exa, Readex_Pro } from "next/font/google";
 import "./globals.css";
 
 import { CartProvider } from "@/components/cart";
@@ -8,6 +8,8 @@ import AutoplayVideos from "@/components/autoplay-videos";
 
 const lexend = Lexend({ variable: "--font-lexend", subsets: ["latin"] });
 const lexendExa = Lexend_Exa({ variable: "--font-lexend-exa", subsets: ["latin"] });
+/* Readex Pro is Lexend carried into Arabic, so the Arabic pages keep the hero's voice. */
+const readex = Readex_Pro({ variable: "--font-readex", subsets: ["arabic", "latin"] });
 const DESCRIPTION = "Sealed terrariums, misted vivariums and the plants that love glass. Nurturing green spaces, cultivating sustainable solutions, and inspiring a greener tomorrow for all.";
 
 export const metadata: Metadata = {
@@ -27,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${lexend.variable} ${lexendExa.variable} h-full antialiased`}
+      className={`${lexend.variable} ${lexendExa.variable} ${readex.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <CartProvider>

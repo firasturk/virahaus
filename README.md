@@ -127,7 +127,8 @@ Every timing is a custom property on `.stage`, so they can be retuned in one pla
   4. **How to order** (`#about`): pick, send on WhatsApp, we confirm and deliver. Holds the #about anchor until the brand story is written.
   5. **Gifting** (`#gift`): macro film, the eight rotating reassurance lines.
   6. **Contact** (`#contact`): WhatsApp.
-- `/product/[slug]` — gallery with thumbnails, size, quantity, *Add to cart*, *Order this now on WhatsApp*, description and details, the rainforest film on vivarium pages, and four related pieces. On phones the price and button stay pinned to the bottom. Statically generated for every product.
+- `/product/[slug]` (English) and `/ar/product/[slug]` (Arabic, right-to-left, set in Readex Pro) — one page per product, built to work as an ad landing page: gallery, price, availability (Ready now or Pre-order · 2 weeks), size and quantity, add to cart or order on WhatsApp, description and details, the size drawn to scale beside a mug (or a person for the large tanks), a numbered cross-section of the six layers for terrarium jars, the rainforest film on vivarium pages, related pieces, and an order form at the foot that sends the request to WhatsApp in the page's language. A switch in the header moves between the two languages. Statically generated for every product.
+- Measurements, outlines and Arabic copy live in `src/data/products-extra.ts`. The measurements are estimates from the size labels and must be replaced with measured figures before the pages run as ads.
 - Prices are in Jordanian dinar (`formatPrice` in `src/data/products.ts`). They were converted from placeholder figures and still need the real price list.
 - Any link to a category (menu, footer, breadcrumb, collection card) goes through `ShopLink` in `src/components/shop-filter.tsx`, which sets the filter and scrolls to the grid, or opens `/#shop-<slug>` from another page.
 
