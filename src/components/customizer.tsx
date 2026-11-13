@@ -402,7 +402,7 @@ export default function Customizer({ lang, photos }: { lang: Lang; photos: strin
               </svg>
 
               <span className="pointer-events-none absolute start-3 bottom-3 rounded-full bg-white/90 px-3 py-1 text-xs">{jarLine}</span>
-              {led && <span className="pointer-events-none absolute end-4 top-4 rounded-full bg-ink px-3 py-1 text-xs text-sand">LED · {ar ? "مؤقت يومي" : "daily timer"}</span>}
+              {led && <span className="pointer-events-none absolute end-4 top-4 rounded-full bg-ink px-3 py-1 text-xs text-sand">LED{ar ? " – مؤقت يومي" : " · daily timer"}</span>}
             </div>
 
             {/* Toolbar for the selected piece */}
@@ -490,7 +490,7 @@ export default function Customizer({ lang, photos }: { lang: Lang; photos: strin
             </section>
 
             <section className="grid gap-3">
-              <h2 className={step}><span className={stepNum}>{num(3, lang)}</span>{ar ? "اللمسات الأخيرة" : "Finishing touches"}</h2>
+              <h2 className={step}><span className={stepNum}>{num(3, lang)}</span>{ar ? "آخر لمسات" : "Finishing touches"}</h2>
               <label className={`flex cursor-pointer items-start gap-4 rounded-2xl border p-4 transition ${led ? "border-ink bg-sand" : "border-ink/15 hover:border-ink/50"}`}>
                 <input type="checkbox" checked={led} onChange={(e) => setLed(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#16140f]" />
                 <span className="min-w-0 flex-1">

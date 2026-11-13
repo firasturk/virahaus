@@ -17,7 +17,7 @@ export default function SiteFooter({ lang }: { lang: Lang }) {
         <div>
           <Image src="/media/VIRA-HAUS-logo.png" alt="ViraHaus" width={561} height={120} className="h-6 w-auto" />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-sand/70">{t.footer.tagline}</p>
-          <p className="mt-6 text-xs text-sand/50">{lang === "ar" ? "كاش · كليك · بطاقة عند الاستلام" : "Cash · CliQ · Card on delivery"}</p>
+          <p className="mt-6 text-xs text-sand/50">{lang === "ar" ? "كاش – كليك – بطاقة عند الاستلام" : "Cash · CliQ · Card on delivery"}</p>
         </div>
 
         <nav className="flex flex-col gap-2.5 text-sm">

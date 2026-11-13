@@ -4,7 +4,7 @@ import type { Lang } from "@/lib/i18n";
 export default function AnnouncementBar({ lang }: { lang: Lang }) {
   const text =
     lang === "ar"
-      ? ["خصم ١٠٪ على طلبك الأول: WELCOME10", "توصيل مجاني فوق ٥٠ د.أ", "نفس اليوم في عمّان قبل الساعة ٤", "الدفع عند الاستلام"]
+      ? ["خصم ١٠٪ على أول طلب: WELCOME10", "توصيل مجاني فوق ٥٠ د.أ", "نفس اليوم بعمّان قبل ٤ العصر", "الدفع عند الاستلام"]
       : ["10% off your first order: WELCOME10", "Free delivery over 50 JD", "Same-day in Amman before 4 pm", "Pay on delivery"];
   return (
     <div className="relative z-50 bg-ink px-4 py-2 text-center text-[0.75rem] text-sand/90">

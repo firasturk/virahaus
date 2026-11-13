@@ -61,7 +61,7 @@ export default function GiftCardPage({ lang }: { lang: Lang }) {
               <div>
                 <p className="display text-[clamp(2.4rem,7vw,3.6rem)] leading-none tabular-nums">{fmt(amount, lang)}</p>
                 <p className="mt-3 line-clamp-2 min-h-[2.5em] text-sm text-sand/75">{msg || t.messagePh}</p>
-                <p className="mt-2 truncate text-xs text-sand/55">{[to && `${t.to} ${to}`, from && `${t.from} ${from}`].filter(Boolean).join("  ·  ") || " "}</p>
+                <p className="mt-2 truncate text-xs text-sand/55">{[to && `${t.to} ${to}`, from && `${t.from} ${from}`].filter(Boolean).join(lang === "ar" ? "  –  " : "  ·  ") || " "}</p>
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function GiftCardPage({ lang }: { lang: Lang }) {
           </fieldset>
           <div className="sm:max-w-xs"><label className={label} htmlFor="g-date">{t.sendOn}</label><input id="g-date" type="date" className={field} value={date} onChange={(e) => setDate(e.target.value)} /></div>
           <div className="grid gap-3 border-t border-[var(--hair-dark)] pt-6 sm:grid-cols-2">
-            <button type="button" onClick={addToJar} className="h-14 rounded-full bg-ink text-[0.95rem] text-white transition hover:bg-black">{t.add} · {fmt(amount, lang)}</button>
+            <button type="button" onClick={addToJar} className="h-14 rounded-full bg-ink text-[0.95rem] text-white transition hover:bg-black">{t.add}{lang === "ar" ? " – " : " · "}{fmt(amount, lang)}</button>
             <a href={whatsappUrl([t.msgHello, "", ...details].join("\n"))} target="_blank" rel="noopener" className="flex h-14 items-center justify-center rounded-full border border-ink/25 text-[0.95rem] transition hover:border-ink">{t.order}</a>
           </div>
         </div>

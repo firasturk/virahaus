@@ -14,7 +14,7 @@ export default function GlobalNotFound() {
         <div>
           <p className="kicker">404</p>
           <h1 className="display mt-4 text-5xl">This page is not here.</h1>
-          <p className="mt-3 text-ink/70" dir="rtl" lang="ar">هذه الصفحة غير موجودة.</p>
+          <p className="mt-3 text-ink/70" dir="rtl" lang="ar">هاي الصفحة مش موجودة.</p>
           <div className="mt-8 flex justify-center gap-3">
             <Link href="/" className="inline-flex h-12 items-center rounded-full bg-ink px-6 text-sm text-sand">Home</Link>
             <Link href="/ar" className="inline-flex h-12 items-center rounded-full border border-ink/35 px-6 text-sm">الرئيسية</Link>

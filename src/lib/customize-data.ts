@@ -36,16 +36,16 @@ export interface Piece {
 }
 
 export const PIECES: Piece[] = [
-  { id: "moss", group: "plants", price: 3, w: 150, h: 70, src: "/media/customize/moss.png", en: "Cushion moss", ar: "طحلب وسادي", noteEn: "Soft green carpet", noteAr: "سجادة خضراء ناعمة" },
-  { id: "fern", group: "plants", price: 4, w: 130, h: 160, src: "/media/customize/fern.png", en: "Mini fern", ar: "سرخس صغير", noteEn: "Feathery height", noteAr: "ارتفاع ريشي" },
+  { id: "moss", group: "plants", price: 3, w: 150, h: 70, src: "/media/customize/moss.png", en: "Cushion moss", ar: "طحلب كثيف", noteEn: "Soft green carpet", noteAr: "سجادة خضراء ناعمة" },
+  { id: "fern", group: "plants", price: 4, w: 130, h: 160, src: "/media/customize/fern.png", en: "Mini fern", ar: "سرخس صغير", noteEn: "Feathery height", noteAr: "طويل وريشي" },
   { id: "fittonia", group: "plants", price: 4, w: 110, h: 95, src: "/media/customize/fittonia.png", en: "Fittonia", ar: "فيتونيا", noteEn: "Pink or white veins", noteAr: "عروق وردية أو بيضاء" },
-  { id: "dragon-stone", group: "rock", price: 3, w: 130, h: 105, src: "/media/customize/dragon-stone.png", en: "Dragon stone", ar: "حجر التنين", noteEn: "Clay, full of holes", noteAr: "طيني مليء بالثقوب" },
+  { id: "dragon-stone", group: "rock", price: 3, w: 130, h: 105, src: "/media/customize/dragon-stone.png", en: "Dragon stone", ar: "حجر التنين", noteEn: "Clay, full of holes", noteAr: "طيني ومليان ثقوب" },
   { id: "seiryu-stone", group: "rock", price: 3, w: 125, h: 110, src: "/media/customize/seiryu-stone.png", en: "Seiryu stone", ar: "حجر سيريو", noteEn: "Blue-grey, sharp ridges", noteAr: "رمادي مزرق بحواف حادة" },
-  { id: "lava-rock", group: "rock", price: 2, w: 95, h: 75, src: "/media/customize/lava-rock.png", en: "Lava rock", ar: "حجر بركاني", noteEn: "Black, light, porous", noteAr: "أسود خفيف ومسامي" },
-  { id: "driftwood", group: "wood", price: 4, w: 190, h: 110, src: "/media/customize/driftwood.png", en: "Driftwood", ar: "خشب الطفو", noteEn: "Smooth, sun-bleached", noteAr: "ناعم وباهت بالشمس" },
-  { id: "dragon-wood", group: "wood", price: 5, w: 170, h: 150, src: "/media/customize/dragon-wood.png", en: "Dragon wood", ar: "خشب التنين", noteEn: "Twisted, many branches", noteAr: "ملتوٍ كثير الأغصان" },
+  { id: "lava-rock", group: "rock", price: 2, w: 95, h: 75, src: "/media/customize/lava-rock.png", en: "Lava rock", ar: "حجر بركاني", noteEn: "Black, light, porous", noteAr: "أسود وخفيف ومسامي" },
+  { id: "driftwood", group: "wood", price: 4, w: 190, h: 110, src: "/media/customize/driftwood.png", en: "Driftwood", ar: "خشب بحري", noteEn: "Smooth, sun-bleached", noteAr: "ناعم ولونه باهت من الشمس" },
+  { id: "dragon-wood", group: "wood", price: 5, w: 170, h: 150, src: "/media/customize/dragon-wood.png", en: "Dragon wood", ar: "خشب التنين", noteEn: "Twisted, many branches", noteAr: "ملتوي وكثير الأغصان" },
   { id: "pebbles", group: "extras", price: 2, w: 120, h: 40, src: "/media/customize/pebbles.png", en: "White pebbles", ar: "حصى أبيض", noteEn: "A little path", noteAr: "ممر صغير" },
-  { id: "mushroom", group: "extras", price: 2, w: 45, h: 55, src: "/media/customize/mushroom.png", en: "Tiny mushroom", ar: "فطر صغير", noteEn: "Ceramic, handmade", noteAr: "سيراميك يدوي" },
+  { id: "mushroom", group: "extras", price: 2, w: 45, h: 55, src: "/media/customize/mushroom.png", en: "Tiny mushroom", ar: "فطر صغير", noteEn: "Ceramic, handmade", noteAr: "سيراميك شغل يدوي" },
 ];
 
 export const piece = (id: string) => PIECES.find((p) => p.id === id)!;
@@ -67,14 +67,14 @@ export const CZ = {
   ar: {
     hardscape: "صخور وخشب",
     modes: { rock: "صخور", wood: "خشب", mix: "مزيج" },
-    modeText: { rock: "حجارة فقط: إحساس الجبل.", wood: "أغصان فقط: أرض الغابة.", mix: "حجارة وخشب معاً، التصميم الكلاسيكي." },
-    mixPreset: "ضع مزيجاً جاهزاً",
-    layers: "طبقة التصريف والفحم والتربة مشمولة.",
+    modeText: { rock: "حجارة بس: جو جبلي.", wood: "أغصان بس: أرض غابة.", mix: "حجارة وخشب مع بعض، الكلاسيكي." },
+    mixPreset: "حط مزيج جاهز",
+    layers: "طبقة التصريف والفحم والتربة ضمن السعر.",
     dims: (w: number, h: number) => `Ø ${w} × ${h} سم`,
-    tapHint: "اضغط على القطعة لإضافتها، ثم اسحبها داخل الجرّة.",
+    tapHint: "اضغط على القطعة لتضيفها، وبعدين اسحبها جوّا الجرّة.",
     engraveCost: "+٥ د.أ",
-    customName: "جرّة مخصصة",
-    added: "أُضيفت إلى جرّتك",
+    customName: "جرّة على ذوقك",
+    added: "انضافت لجرّتك",
     each: "للقطعة",
   },
 } satisfies Record<Lang, unknown>;

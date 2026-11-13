@@ -5,15 +5,15 @@ import "../globals.css";
 import SiteShell from "@/components/site-shell";
 import { readexBody, readexDisplay } from "../fonts";
 
-const DESCRIPTION = "تيراريوم مصنوع يدوياً لا يحتاج إلا الضوء، وفيفاريوم حسب الطلب، ونباتات تحب الزجاج. توصيل لكل الأردن.";
+const DESCRIPTION = "تيراريوم بنعمله بإيدينا وما بده غير ضو، فيفاريوم حسب الطلب، ونباتات بتحب الزجاج. توصيل لكل الأردن.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://virahaus.vercel.app"),
-  title: { default: "ViraHaus — اكتشف الأخضر بداخلك", template: "%s — ViraHaus" },
+  title: { default: "ViraHaus — اكتشف الأخضر اللي فيك", template: "%s — ViraHaus" },
   description: DESCRIPTION,
   alternates: { languages: { en: "/", ar: "/ar" } },
   openGraph: {
-    title: "ViraHaus — اكتشف الأخضر بداخلك",
+    title: "ViraHaus — اكتشف الأخضر اللي فيك",
     description: DESCRIPTION,
     siteName: "ViraHaus",
     type: "website",
