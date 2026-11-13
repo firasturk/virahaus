@@ -6,13 +6,14 @@ import { isPreorder, PREORDER_WEEKS, type Product } from "@/data/products";
 import { EXTRA } from "@/data/products-extra";
 import { whatsappUrl } from "@/lib/contact";
 import { price, T, type Lang } from "@/lib/i18n";
+import { LED_PRICE } from "@/lib/product-copy";
 
 /*
  * The form at the foot of each product page, for visitors arriving from an ad.
  * It builds the order as a WhatsApp message in the page's language and opens it;
  * the business confirms from there.
  */
-export default function OrderForm({ product, lang, variant, onVariant }: { product: Product; lang: Lang; variant: number; onVariant: (i: number) => void }) {
+export default function OrderForm({ product, lang, variant, onVariant, led = false }: { product: Product; lang: Lang; variant: number; onVariant: (i: number) => void; led?: boolean }) {
   const t = T[lang];
   const preorder = isPreorder(product);
   const labels = lang === "ar" ? EXTRA[product.slug].ar.options : product.variants.options.map((o) => o.label);
@@ -22,7 +23,7 @@ export default function OrderForm({ product, lang, variant, onVariant }: { produ
   const [state, setState] = useState<"idle" | "error" | "sent">("idle");
   const set = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) => setForm((f) => ({ ...f, [k]: v }));
 
-  const unit = product.price + product.variants.options[variant].delta;
+  const unit = product.price + product.variants.options[variant].delta + (led ? LED_PRICE : 0);
   const minDate = (() => {
     const d = new Date();
     d.setDate(d.getDate() + (preorder ? PREORDER_WEEKS * 7 : 1));
@@ -46,12 +47,12 @@ export default function OrderForm({ product, lang, variant, onVariant }: { produ
     ]
       .filter(([, v]) => v)
       .map(([k, v]) => `${k}: ${v}`);
-    const item = `• ${name} (${labels[variant]}) ×${form.qty} — ${price(unit * form.qty, lang)} — ${preorder ? t.msgPre(PREORDER_WEEKS) : t.msgReady}`;
+    const item = `• ${name} (${labels[variant]}${led ? " + LED" : ""}) ×${form.qty} — ${price(unit * form.qty, lang)} — ${preorder ? t.msgPre(PREORDER_WEEKS) : t.msgReady}`;
     window.open(whatsappUrl([t.msgHello, "", item, "", ...details].join("\n")), "_blank", "noopener");
     setState("sent");
   };
 
-  const field = "h-12 w-full rounded-full border border-ink/25 bg-sand px-5 text-[0.95rem] outline-none transition placeholder:text-ink/40 focus:border-ink";
+  const field = "h-12 w-full rounded-full border border-ink/25 bg-white px-5 text-[0.95rem] outline-none transition placeholder:text-ink/40 focus:border-ink";
   const label = "mb-1.5 block text-sm text-ink/70";
 
   return (
@@ -104,7 +105,7 @@ export default function OrderForm({ product, lang, variant, onVariant }: { produ
       )}
       <div className="sm:col-span-2">
         <label className={label} htmlFor="f-notes">{t.notes}</label>
-        <textarea id="f-notes" rows={3} className="w-full resize-none rounded-[1.5rem] border border-ink/25 bg-sand px-5 py-3 text-[0.95rem] outline-none transition focus:border-ink" value={form.notes} onChange={(e) => set("notes", e.target.value)} />
+        <textarea id="f-notes" rows={3} className="w-full resize-none rounded-[1.5rem] border border-ink/25 bg-white px-5 py-3 text-[0.95rem] outline-none transition focus:border-ink" value={form.notes} onChange={(e) => set("notes", e.target.value)} />
       </div>
 
       <div className="flex flex-col gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">

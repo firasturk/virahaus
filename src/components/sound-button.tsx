@@ -8,7 +8,7 @@ import { Soundscape } from "./ambient-sound";
  * The hero's play control. Idle it is the play glyph; pressed it starts the
  * synthesised rainforest and turns into four bars that move with the rain.
  */
-export default function SoundButton({ className, innerClassName }: { className?: string; innerClassName?: string }) {
+export default function SoundButton({ className, innerClassName, labels = { play: "Play the rainforest sound", stop: "Turn the rainforest sound off" } }: { className?: string; innerClassName?: string; labels?: { play: string; stop: string } }) {
   const [on, setOn] = useState(false);
   const scape = useRef<Soundscape | null>(null);
 
@@ -27,8 +27,8 @@ export default function SoundButton({ className, innerClassName }: { className?:
       data-on={on}
       onClick={toggle}
       aria-pressed={on}
-      aria-label={on ? "Turn the rainforest sound off" : "Play the rainforest sound"}
-      title={on ? "Sound on" : "Sound off"}
+      aria-label={on ? labels.stop : labels.play}
+      title={on ? labels.stop : labels.play}
     >
       <span className={innerClassName}>
         {on ? (

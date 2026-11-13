@@ -62,7 +62,7 @@ export const products: Product[] = [
     price: 170,
     tagline: "A lava-rock ridge under a single cold light.",
     description:
-      "Black volcanic stone stacked into a ridge, dressed in cushion moss and a maidenhair fern, sealed inside a hand-blown vessel with a lamp built into its cap. Planted and sealed by hand, it runs its own weather: no watering, no feeding. Give it light and leave it alone.",
+      "Black volcanic stone stacked into a ridge, dressed in cushion moss and a maidenhair fern, sealed inside a hand-blown vessel. Add the LED lid and it lights itself every day on a timer. Planted and sealed by hand, it runs its own weather: no watering, no feeding. Give it light and leave it alone.",
     images: [`${P}/terrarium-jar.jpg`, `${P}/lifestyle-desk.jpg`, `${P}/vivarium-tank.jpg`],
     variants: {
       name: "Size",
@@ -74,7 +74,7 @@ export const products: Product[] = [
     },
     specs: [
       { label: "Vessel", value: "Hand-blown borosilicate, 42 cm" },
-      { label: "Light", value: "Integrated 6500K LED cap, 8h timer" },
+      { label: "Light", value: "Optional LED lid with a daily timer (+20 JD)" },
       { label: "Substrate", value: "Lava rock, sphagnum, drainage layer" },
       { label: "Care", value: "None. Sealed — it only needs light." },
       { label: "Made", value: "By hand, one at a time" },
@@ -87,8 +87,8 @@ export const products: Product[] = [
     price: 130,
     tagline: "A cylinder of rain that never quite stops.",
     description:
-      "Tall glass, condensation on the walls, a column of moss and creeping fig climbing a spine of cork. Sits under its own hood light so it reads like a lantern on a desk after dark. Sealed by hand; it waters itself.",
-    images: [`${P}/lifestyle-desk.jpg`, `${P}/terrarium-jar.jpg`],
+      "Tall glass, condensation on the walls, a column of moss and creeping fig climbing a spine of cork. With the LED lid it glows like a lantern on a desk after dark. Sealed by hand; it waters itself.",
+    images: [`${P}/cascade-vessel.jpg`, `${P}/lifestyle-desk.jpg`],
     variants: {
       name: "Height",
       options: [
@@ -98,7 +98,7 @@ export const products: Product[] = [
     },
     specs: [
       { label: "Vessel", value: "Seeded glass cylinder, 30 cm" },
-      { label: "Light", value: "Hood lamp, warm 3000K" },
+      { label: "Light", value: "Optional LED lid with a daily timer (+20 JD)" },
       { label: "Planting", value: "Creeping fig, pillow moss, cork spine" },
       { label: "Care", value: "None. Sealed — it only needs light." },
       { label: "Made", value: "By hand, one at a time" },
@@ -112,7 +112,7 @@ export const products: Product[] = [
     tagline: "Fog in a jar.",
     description:
       "A low, wide cylinder built around a single piece of driftwood, carpeted in moss and lit from above. The quietest thing in the range, and the easiest: sealed by hand, it needs nothing but light.",
-    images: [`${P}/lifestyle-desk.jpg`, `${P}/vivarium-tank.jpg`],
+    images: [`${P}/nimbus-cylinder.jpg`, `${P}/lifestyle-desk.jpg`],
     variants: { name: "Finish", options: [{ label: "Clear", delta: 0 }, { label: "Seeded", delta: 14 }] },
     specs: [
       { label: "Vessel", value: "Cylinder, 24 cm" },

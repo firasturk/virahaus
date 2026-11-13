@@ -8,6 +8,29 @@ walking it — revealed through a soft organic mask that follows the cursor.
 The headline is *"Find your inner green"*, so the reveal is the idea: the green
 is inside the dead wood, and the cursor is what finds it.
 
+## The store
+
+Two languages, two root layouts: English at `/` (`src/app/(en)`), Arabic at `/ar` (`src/app/(ar)/ar`, `dir="rtl"`, Readex Pro). Copy lives in `src/lib/dict.ts`, `src/lib/i18n.ts`, `src/lib/product-copy.ts`, `src/lib/extras-copy.ts` and `src/lib/customize-data.ts`; product data in `src/data/products.ts` and `src/data/products-extra.ts`.
+
+| Route | What it is |
+| --- | --- |
+| `/` | Hero, USPs, categories, bestsellers, reviews, customize band, ecosystem, gifts, corporate + gift card, how it works, FAQ, aquariums, contact |
+| `/shop`, `/shop/[category]` | Grid with availability and price filters |
+| `/product/[slug]` | Gallery, buy box (LED lid +20 JD, running total), line drawing, care guide, gift-ready, details, reviews, related, order form |
+| `/customize` | Drag-and-drop jar builder (shape, size, plants, Rock / Wood / Mix hardscape, extras, LED, engraving) |
+| `/corporate` | Logo-on-the-lid gifts with a live logo preview and a quote form |
+| `/gift-card` | Gift cards, 25–100 JD |
+
+The cart is a jar: items fly into it, and the order goes out as a WhatsApp message (0787777177) with the gift note, delivery date and the `WELCOME10` first-order code.
+
+**Placeholders to replace:** delivery fees and free-delivery threshold, guarantee terms, corporate discounts, jar and piece prices in the customizer, `WELCOME10`, sample reviews, Instagram/TikTok handles, product sizes, and the generated photos (`public/media/products/cascade-vessel.jpg`, `nimbus-cylinder.jpg`, `public/media/customize/*`, `gift-box.jpg`, `gift-card.jpg`).
+
+## Turning it into an app
+
+1. **PWA (now):** `src/app/manifest.ts` makes the site installable from the browser.
+2. **Store apps:** wrap the same Next.js routes with Capacitor (iOS + Android). The cart already lives in `localStorage` and orders go through WhatsApp links, so both work inside a web view unchanged.
+3. **Later:** move products and orders to an API (or a headless store) so the site and the app share one backend, and add push notifications for order updates.
+
 ## Running it
 
 ```bash

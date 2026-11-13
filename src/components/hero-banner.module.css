@@ -26,6 +26,34 @@
   font-family: var(--font-lexend), system-ui, sans-serif;
 }
 
+/* --- Language switch, left of the jar --- */
+
+.langSlot {
+  position: absolute;
+  left: 73.6%;
+  top: 2.9%;
+  display: grid;
+  place-items: center;
+  height: 2.5cqw;
+  min-height: 34px;
+  padding: 0 1cqw;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  font-size: 0.9cqw;
+  color: #fff;
+  pointer-events: auto;
+  transition: border-color 0.3s ease;
+}
+
+.langSlot:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Arabic: Readex sits taller than Lexend Exa, so the headline needs more line height. */
+:global(html[lang="ar"]) .headline {
+  line-height: 1.45;
+}
+
 /* --- Reveal hint: under the play button, white like the headline --- */
 
 .hint {
@@ -523,6 +551,7 @@
 
 .about,
 .burger,
+.langSlot,
 .cartSlot {
   --from: -18.75cqw; /* 360 * 0.75 */
   animation: introDrop var(--nav-dur) var(--fig-spring) var(--nav-delay) both;
@@ -644,10 +673,24 @@
     height: 1.5rem;
   }
 
+  /* RTL puts the static logo on the right, under the controls; keep it on the left. */
+  :global(html[dir="rtl"]) .logo {
+    align-self: flex-end;
+  }
+
   .cartSlot {
     top: 1.35rem;
     right: 4.25rem;
     left: auto;
+  }
+
+  .langSlot {
+    top: 1.35rem;
+    right: 10.6rem;
+    left: auto;
+    height: 2.25rem;
+    padding: 0 0.8rem;
+    font-size: 0.8rem;
   }
 
   .burger {

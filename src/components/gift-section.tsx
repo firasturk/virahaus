@@ -1,30 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+import { DICT, href } from "@/lib/dict";
+import type { Lang } from "@/lib/i18n";
 import GlyphRise from "./glyph-rise";
 import Reveal from "./reveal";
-import { ShopLink } from "./shop-filter";
 
-/* Eight short lines that answer a gift-giver's doubts; one shows at a time. */
-export const GIFT_MICROCOPY = [
-  "No watering, ever. It only needs light.",
-  "Handmade, one at a time.",
-  "A handwritten note, included at no cost.",
-  "Jars and plants are ready now.",
-  "Tell us the day. We'll deliver it then.",
-  "No account needed — order on WhatsApp in a minute.",
-  "Not sure what to pick? Ask us on WhatsApp.",
-  "Nothing to pay until we've confirmed it with you.",
-];
-
-export default function GiftSection() {
+export default function GiftSection({ lang }: { lang: Lang }) {
+  const t = DICT[lang].gifting;
+  const ar = lang === "ar";
   const [i, setI] = useState(0);
   useEffect(() => {
-    const t = window.setInterval(() => setI((n) => (n + 1) % GIFT_MICROCOPY.length), 2800);
-    return () => window.clearInterval(t);
-  }, []);
+    const id = window.setInterval(() => setI((n) => (n + 1) % t.lines.length), 2800);
+    return () => window.clearInterval(id);
+  }, [t.lines.length]);
 
   return (
     <section id="gift" className="relative flex min-h-[80svh] items-center overflow-hidden px-5 py-24 text-white sm:px-10">
@@ -32,37 +24,42 @@ export default function GiftSection() {
         <source src="/media/gift-micro.mp4" type="video/mp4" />
         <source src="/media/gift-micro.webm" type="video/webm" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/30 to-ink/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/35 to-ink/65" />
 
       <div className="relative mx-auto max-w-3xl text-center">
-        <Reveal><p className="kicker !text-white/75">Gifting</p></Reveal>
+        <Reveal><p className="kicker !text-white/80">{t.kicker}</p></Reveal>
         <h2 className="display mt-6 text-[clamp(2.3rem,5.4vw,4.4rem)]">
-          <GlyphRise text="Send a lifetime" />
-          <br />
-          <GlyphRise text="for your loved ones." offset={15} />
+          {ar ? (
+            <Reveal>{t.line1}<br />{t.line2}</Reveal>
+          ) : (
+            <>
+              <GlyphRise text={t.line1} />
+              <br />
+              <GlyphRise text={t.line2} offset={15} />
+            </>
+          )}
         </h2>
         <Reveal delay={0.2}>
-          <p className="mx-auto mt-6 max-w-lg text-[1.05rem] leading-relaxed text-white/85">
-            Flowers last a week. A handmade sealed jar keeps living for years with nothing but light — and every time it rains inside the glass, they&apos;ll think of you.
-          </p>
+          <p className="mx-auto mt-6 max-w-lg text-[1.05rem] leading-relaxed text-white/85">{t.text}</p>
         </Reveal>
 
         <Reveal delay={0.3} className="mt-9 flex flex-col items-center">
-          <ShopLink to="terrarium" className="pill-light">
+          <div className="flex flex-wrap justify-center gap-2">
+            {t.bands.map((b) => (
+              <Link key={b.band} href={href(lang, `/shop#price-${b.band}`)} className="rounded-full border border-white/40 bg-white/5 px-5 py-2.5 text-sm backdrop-blur transition hover:border-white hover:bg-white/15">
+                {b.label}
+              </Link>
+            ))}
+          </div>
+          <Link href={href(lang, "/shop")} className="pill-light mt-5">
             <span className="dot"><span className="h-1.5 w-1.5 rounded-full bg-white" /></span>
-            Choose a no-care gift
-          </ShopLink>
-          <div className="relative mt-5 h-6 w-full max-w-md" aria-live="polite">
+            {t.cta}
+          </Link>
+          <p className="mt-6 text-xs text-white/65">{t.occasions}</p>
+          <div className="relative mt-3 h-6 w-full max-w-md" aria-live="polite">
             <AnimatePresence mode="wait">
-              <motion.p
-                key={i}
-                className="absolute inset-0 text-center text-sm text-white/80"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.45 }}
-              >
-                {GIFT_MICROCOPY[i]}
+              <motion.p key={i} className="absolute inset-0 text-center text-sm text-white/85" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.45 }}>
+                {t.lines[i]}
               </motion.p>
             </AnimatePresence>
           </div>

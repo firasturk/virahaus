@@ -1,36 +1,55 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
-import { ShopLink } from "./shop-filter";
+import { categories } from "@/data/products";
+import { CATEGORY_AR_PLURAL } from "@/data/products-extra";
+import { INSTAGRAM_URL, TIKTOK_URL, WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
+import { XC } from "@/lib/extras-copy";
+import { DICT, href } from "@/lib/dict";
+import type { Lang } from "@/lib/i18n";
 
-export default function SiteFooter() {
+export default function SiteFooter({ lang }: { lang: Lang }) {
+  const t = DICT[lang];
+  const link = "text-sand/80 transition hover:text-white";
   return (
-    <footer className="relative border-t border-[var(--hair-dark)] bg-sand-2 px-6 py-12 text-ink sm:px-10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+    <footer className="relative bg-ink px-5 pt-16 pb-10 text-sand sm:px-10">
+      <div className="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Image src="/media/VIRA-HAUS-logo.png" alt="ViraHaus" width={561} height={120} className="h-6 w-auto [filter:brightness(0.09)]" />
-          <p className="mt-4 max-w-xs text-sm text-rust">Nurturing green spaces, cultivating sustainable solutions, and inspiring a greener tomorrow for all.</p>
+          <Image src="/media/VIRA-HAUS-logo.png" alt="ViraHaus" width={561} height={120} className="h-6 w-auto" />
+          <p className="mt-5 max-w-xs text-sm leading-relaxed text-sand/70">{t.footer.tagline}</p>
+          <p className="mt-6 text-xs text-sand/50">{lang === "ar" ? "كاش · كليك · بطاقة عند الاستلام" : "Cash · CliQ · Card on delivery"}</p>
         </div>
-        <nav className="flex flex-wrap gap-x-10 gap-y-6 text-sm">
-          <div className="flex flex-col gap-2">
-            <span className="kicker">Shop</span>
-            <ShopLink to="terrarium" className="text-rust hover:text-ink">Terrariums</ShopLink>
-            <ShopLink to="vivarium" className="text-rust hover:text-ink">Vivariums</ShopLink>
-            <ShopLink to="plants" className="text-rust hover:text-ink">Plants</ShopLink>
-            <Link href="/#gift" className="text-rust hover:text-ink">Gifting</Link>
-            <Link href="/#about" className="text-rust hover:text-ink">How to order</Link>
-            <Link href="/#aquariums" className="text-rust hover:text-ink">Custom aquariums</Link>
-          </div>
-          <div className="flex flex-col gap-2">
-            <span className="kicker">Contact</span>
-            <a href={whatsappUrl()} target="_blank" rel="noopener" className="text-rust hover:text-ink">WhatsApp {WHATSAPP_DISPLAY}</a>
-            <a href={whatsappUrl("Hi ViraHaus, I have a question.")} target="_blank" rel="noopener" className="text-rust hover:text-ink">Ask us anything</a>
-            <span className="text-ink/60">Amman · ships everywhere</span>
-          </div>
+
+        <nav className="flex flex-col gap-2.5 text-sm">
+          <span className="mb-1 text-xs tracking-[0.2em] text-sand/50 uppercase">{t.footer.shop}</span>
+          {categories.map((c) => (
+            <Link key={c.slug} href={href(lang, `/shop/${c.slug}`)} className={link}>{lang === "ar" ? CATEGORY_AR_PLURAL[c.slug] : c.name}</Link>
+          ))}
+          <Link href={href(lang, "/customize")} className={link}>{t.nav.customize}</Link>
+          <Link href={href(lang, "/corporate")} className={link}>{XC[lang].nav.corporate}</Link>
+          <Link href={href(lang, "/gift-card")} className={link}>{XC[lang].nav.giftCard}</Link>
+        </nav>
+
+        <nav className="flex flex-col gap-2.5 text-sm">
+          <span className="mb-1 text-xs tracking-[0.2em] text-sand/50 uppercase">{t.footer.help}</span>
+          <Link href={href(lang, "/#how")} className={link}>{t.nav.how}</Link>
+          <Link href={href(lang, "/#faq")} className={link}>{t.nav.faq}</Link>
+          <Link href={href(lang, "/#gift")} className={link}>{t.nav.gifts}</Link>
+          <Link href={href(lang, "/#aquariums")} className={link}>{t.nav.aquariums}</Link>
+        </nav>
+
+        <nav className="flex flex-col gap-2.5 text-sm">
+          <span className="mb-1 text-xs tracking-[0.2em] text-sand/50 uppercase">{t.footer.follow}</span>
+          <a href={whatsappUrl()} target="_blank" rel="noopener" className="text-sand/80 hover:text-white">{t.footer.whatsapp} <span dir="ltr">{WHATSAPP_DISPLAY}</span></a>
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener" className="text-sand/80 hover:text-white">{t.footer.instagram}</a>
+          <a href={TIKTOK_URL} target="_blank" rel="noopener" className="text-sand/80 hover:text-white">{t.footer.tiktok}</a>
+          <span className="text-sand/50">{t.footer.city}</span>
         </nav>
       </div>
-      <p className="mx-auto mt-10 max-w-7xl text-[0.68rem] tracking-[0.24em] uppercase text-ink/45">© {new Date().getFullYear()} ViraHaus</p>
+      <div className="mx-auto mt-14 flex max-w-7xl flex-col gap-3 border-t border-white/10 pt-6 text-xs text-sand/50 sm:flex-row sm:items-center sm:justify-between">
+        <span>© {new Date().getFullYear()} ViraHaus. {t.footer.rights}</span>
+        <Link href={lang === "en" ? "/ar" : "/"} hrefLang={lang === "en" ? "ar" : "en"} className="text-sand/80 hover:text-white">{t.nav.language}</Link>
+      </div>
     </footer>
   );
 }

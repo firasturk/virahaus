@@ -100,16 +100,17 @@ body {
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 /*
- * Arabic pages: Readex Pro throughout, and no letter-spacing. Tracking breaks
- * the joins between Arabic letters, so every tracking rule is neutralised.
+ * Arabic pages: Readex Pro is loaded under the Lexend variable names, so the
+ * fonts follow on their own. What has to change is spacing: tracking breaks the
+ * joins between Arabic letters, so every tracking rule is neutralised, and
+ * Arabic needs more line height than the tight Latin display setting.
  */
-.font-ar,
-.font-ar .display {
-  font-family: var(--font-readex), var(--font-lexend), sans-serif;
-}
-.font-ar,
-.font-ar * {
+html[lang="ar"],
+html[lang="ar"] * {
   letter-spacing: 0 !important;
 }
-.font-ar .display { font-weight: 500; line-height: 1.25; }
-.font-ar .kicker { text-transform: none; font-size: 0.85rem; }
+html[lang="ar"] .display { font-weight: 500; line-height: 1.3; }
+html[lang="ar"] .kicker { text-transform: none; font-size: 0.85rem; }
+
+/* Inside a page in one language, a block in the other (the Arabic product pages used .font-ar). */
+.font-ar { font-family: var(--font-lexend), sans-serif; }
