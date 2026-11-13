@@ -1,6 +1,6 @@
 # Instagram launch: 20 posts
 
-Posting order 1 to 20 (1 goes out first). Images in `posts/`, 1080×1350.
+Posting order 1 to 20 (1 goes out first). Images in `posts/`, 1080×1350. Posts 2, 9, 10, 15 and 17 use our own studio photos; the rest are concept photos to replace with our shoot.
 
 ## 1. Teaser — Day -3 (Post)
 
@@ -160,11 +160,11 @@ Corporate gifts with your logo engraved on the lid, in a branded box with your m
 
 ![](posts/post-15.jpg)
 
-New plants: Begonia maculata.
+New plants: rare begonias.
 
-Polka dots, naturally. Loves humidity, which makes it perfect for a jar. 24 JD.
+Velvet leaves, silver veins, pink speckles. Grown and potted by us in Amman, and happiest in the humidity of a jar or vivarium.
 
-#begoniamaculata #rareplants #houseplants
+#begonia #rareplants #houseplants
 
 ## 16. LED lid — Day +25 (Reel (lights on at 6 pm))
 
@@ -182,7 +182,7 @@ The LED lid has a built-in timer: it switches on and off on its own, so your jar
 
 Behind the glass.
 
-Drainage, charcoal, soil, stone, moss. Every layer placed by hand.
+This is where it all grows: our studio in Amman, a few vivariums deep. Drainage, charcoal, soil, stone, moss. Every layer placed by hand.
 
 #behindthescenes #process #handmade
 

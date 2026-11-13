@@ -3,6 +3,7 @@ import AnnouncementBar from "./announcement-bar";
 import CorporateBand from "./corporate-band";
 import GiftSection from "./gift-section";
 import Reviews from "./reviews";
+import StudioSection from "./studio-section";
 import HeroBanner from "./hero-banner";
 import { AquariumBand, BestsellersSection, CategoriesSection, ContactBand, CustomizeBand, EcosystemSection, FaqSection, HowSection, UspStrip } from "./home-sections";
 import SiteFooter from "./site-footer";
@@ -23,6 +24,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
       <CategoriesSection lang={lang} />
       <BestsellersSection lang={lang} />
       <Reviews lang={lang} tone="sand" />
+      <StudioSection lang={lang} />
       <CustomizeBand lang={lang} />
       <EcosystemSection lang={lang} />
       <GiftSection lang={lang} />

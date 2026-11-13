@@ -129,7 +129,7 @@ export const products: Product[] = [
     tagline: "Rainforest, front-opening, with weather built in.",
     description:
       "A low-iron glass tank with a hinged canopy, misting nozzle, and a full-spectrum bar light. Cork background planted with bromeliads, fittonia and moss; a shallow water table along the base for humidity. Everything a dart frog would want, and nothing it wouldn't.",
-    images: [`${P}/vivarium-tank.jpg`, `${P}/paludarium-cabinet.jpg`, `${P}/lifestyle-desk.jpg`],
+    images: ["/media/studio/vivarium-dark.jpg", "/media/studio/vivarium-frog.jpg", `${P}/vivarium-tank.jpg`],
     variants: {
       name: "Size",
       options: [
@@ -153,7 +153,7 @@ export const products: Product[] = [
     tagline: "A wall of jungle behind two doors.",
     description:
       "Double-door display vivarium on a matte black cabinet. Anthurium, calathea, bromeliads and vines on a sculpted background, under four spotlights. Built to order; planted by hand; delivered and installed.",
-    images: ["/media/ref-vivarium-1.png", "/media/ref-vivarium-2.png", `${P}/paludarium-cabinet.jpg`],
+    images: ["/media/studio/vivarium-cabinet.jpg", "/media/studio/vivarium-open.jpg", "/media/studio/closeup-begonias.jpg"],
     variants: {
       name: "Width",
       options: [
