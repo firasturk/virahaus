@@ -1,6 +1,6 @@
 # Instagram launch: 20 posts
 
-Posting order 1 to 20 (1 goes out first). Images in `posts/`, 1080×1350. Posts 2, 9, 10, 15 and 17 use our own studio photos; the rest are concept photos to replace with our shoot.
+Posting order 1 to 20 (1 goes out first). Images in `posts/`, 1080×1350. Posts 2, 9, 10, 15 and 17 use our own studio photos; the rest are concept photos to replace with our shoot. Post 10 is a Reel (`public/media/build/new-project.mp4`); post 17 is a carousel (`post-17-s2.jpg` … `s8`).
 
 ## 1. Teaser — Day -3 (Post)
 
@@ -103,13 +103,13 @@ Made by hand in Amman, one jar at a time.
 
 #handmade #craft #fern
 
-## 10. Vivarium — Day +13 (Carousel (3))
+## 10. Vivarium — Day +13 (Reel (13 s))
 
 ![](posts/post-10.jpg)
 
 A rainforest, made to order.
 
-Vivariums with built-in light and misting, designed for your room. Pre-order: ready two weeks after we confirm. Delivered and set up by us.
+New project: this one started as an empty glass box. Every vivarium is built from scratch for its room, with built-in light and misting. Pre-order: ready two weeks after we confirm.
 
 #vivarium #rainforest #interiordesign
 
@@ -176,13 +176,21 @@ The LED lid has a built-in timer: it switches on and off on its own, so your jar
 
 #ledlight #terrarium #cozy
 
-## 17. Behind the scenes — Day +27 (Reel (build in 30 s))
+## 17. Behind the scenes — Day +27 (Carousel (8))
 
 ![](posts/post-17.jpg)
 
-Behind the glass.
+Behind the glass: how a vivarium is born.
 
-This is where it all grows: our studio in Amman, a few vivariums deep. Drainage, charcoal, soil, stone, moss. Every layer placed by hand.
+1. The frame
+2. Roots
+3. Foam
+4. The skin
+5. Carving
+6. Lianas
+7. Planting
+
+Every one is built from scratch in our studio in Amman, for the room it will live in. Swipe through the build.
 
 #behindthescenes #process #handmade
 

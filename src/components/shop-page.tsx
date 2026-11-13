@@ -11,6 +11,7 @@ import type { Lang } from "@/lib/i18n";
 import { JarGlyph } from "./cart";
 import { DUR_COPY, figSpring } from "./motion";
 import ProductCard from "./product-card";
+import VivariumBuild from "./vivarium-build";
 
 type Avail = "any" | "ready" | "pre";
 type Band = "any" | "under-30" | "30-100" | "over-100";
@@ -121,6 +122,7 @@ export default function ShopPage({ lang, category }: { lang: Lang; category?: Ca
             </AnimatePresence>
           </motion.ul>
         )}
+        {category === "vivarium" && <VivariumBuild lang={lang} bare />}
       </div>
     </div>
   );
