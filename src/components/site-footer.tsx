@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
+import { ShopLink } from "./shop-filter";
 
 export default function SiteFooter() {
   return (
@@ -14,10 +15,11 @@ export default function SiteFooter() {
         <nav className="flex flex-wrap gap-x-10 gap-y-6 text-sm">
           <div className="flex flex-col gap-2">
             <span className="kicker">Shop</span>
-            <Link href="/#shop" className="text-rust hover:text-ink">Terrariums</Link>
-            <Link href="/#shop" className="text-rust hover:text-ink">Vivariums</Link>
-            <Link href="/#shop" className="text-rust hover:text-ink">Plants</Link>
+            <ShopLink to="terrarium" className="text-rust hover:text-ink">Terrariums</ShopLink>
+            <ShopLink to="vivarium" className="text-rust hover:text-ink">Vivariums</ShopLink>
+            <ShopLink to="plants" className="text-rust hover:text-ink">Plants</ShopLink>
             <Link href="/#gift" className="text-rust hover:text-ink">Gifting</Link>
+            <Link href="/#about" className="text-rust hover:text-ink">How to order</Link>
           </div>
           <div className="flex flex-col gap-2">
             <span className="kicker">Contact</span>

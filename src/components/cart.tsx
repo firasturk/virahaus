@@ -24,7 +24,7 @@ interface CartContextValue {
   total: number;
   open: boolean;
   setOpen: (v: boolean) => void;
-  add: (line: Omit<CartLine, "key" | "qty">) => void;
+  add: (line: Omit<CartLine, "key" | "qty">, qty?: number) => void;
   remove: (key: string) => void;
   setQty: (key: string, qty: number) => void;
 }
@@ -70,11 +70,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const current = useSyncExternalStore(subscribe, read, () => EMPTY);
   const [open, setOpen] = useState(false);
 
-  const add = useCallback((line: Omit<CartLine, "key" | "qty">) => {
+  const add = useCallback((line: Omit<CartLine, "key" | "qty">, qty = 1) => {
     const key = `${line.slug}::${line.variant}`;
     const prev = read();
     const hit = prev.find((l) => l.key === key);
-    write(hit ? prev.map((l) => (l.key === key ? { ...l, qty: l.qty + 1 } : l)) : [...prev, { ...line, key, qty: 1 }]);
+    write(hit ? prev.map((l) => (l.key === key ? { ...l, qty: l.qty + qty } : l)) : [...prev, { ...line, key, qty }]);
     setOpen(true);
   }, []);
 
@@ -186,7 +186,13 @@ function CartDrawer() {
 
             <div className="flex-1 overflow-y-auto px-6 py-4">
               {lines.length === 0 ? (
-                <p className="mt-10 text-center text-sm text-ink/60">Nothing here yet. Everything grows.</p>
+                <div className="mt-16 flex flex-col items-center text-center">
+                  <p className="display text-xl">Your cart is empty.</p>
+                  <p className="mt-2 text-sm text-ink/60">Pick a terrarium, a vivarium or a plant to start.</p>
+                  <Link href="/#shop" onClick={() => setOpen(false)} className="mt-6 inline-flex h-11 items-center rounded-full bg-ink px-6 text-sm text-sand transition hover:bg-black">
+                    Browse the shop
+                  </Link>
+                </div>
               ) : (
                 <ul className="space-y-5">
                   {lines.map((l) => (

@@ -148,7 +148,7 @@ export default function HeroBanner() {
             <Link className={styles.navShop} href="/#shop">
               shop
             </Link>
-            <Link className={styles.navContact} href="/#gift">
+            <Link className={styles.navContact} href="/#contact">
               Contact
             </Link>
           </nav>

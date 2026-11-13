@@ -7,6 +7,7 @@ import { useEffect, useSyncExternalStore, type ReactNode } from "react";
 import { categories } from "@/data/products";
 import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
 import { DUR_COPY, figSpring } from "./motion";
+import { ShopLink, type ShopFilter } from "./shop-filter";
 
 /* The menu's open flag is a tiny external store so any burger on the page can toggle it. */
 let open = false;
@@ -15,11 +16,13 @@ const subscribe = (l: () => void) => { listeners.add(l); return () => listeners.
 export function setMenuOpen(v: boolean) { open = v; listeners.forEach((l) => l()); }
 export function useMenuOpen() { return useSyncExternalStore(subscribe, () => open, () => false); }
 
-const LINKS: { label: string; href: string }[] = [
-  { label: "Home", href: "/" },
-  { label: "Shop", href: "/#shop" },
-  ...categories.map((c) => ({ label: c.name, href: "/#shop" })),
+type MenuLink = { label: string; href?: string; shop?: ShopFilter };
+const LINKS: MenuLink[] = [
+  { label: "Shop all", shop: "all" },
+  ...categories.map((c) => ({ label: c.name, shop: c.slug as ShopFilter })),
+  { label: "How to order", href: "/#about" },
   { label: "Gifting", href: "/#gift" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function MenuButton({ className, children, label = "Open menu" }: { className?: string; children: ReactNode; label?: string }) {
@@ -73,13 +76,15 @@ export function MenuOverlay() {
                     animate={{ y: 0 }}
                     transition={{ duration: DUR_COPY, ease: figSpring, delay: 0.05 + i * 0.05 }}
                   >
-                    <Link
-                      href={l.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="display block text-[clamp(2.2rem,7vw,5.6rem)] leading-[1.02] transition-colors hover:text-rust"
-                    >
-                      {l.label}
-                    </Link>
+                    {l.shop ? (
+                      <ShopLink to={l.shop} onNavigate={() => setMenuOpen(false)} className="display block text-[clamp(2rem,6vw,4.8rem)] leading-[1.04] transition-colors hover:text-rust">
+                        {l.label}
+                      </ShopLink>
+                    ) : (
+                      <Link href={l.href!} onClick={() => setMenuOpen(false)} className="display block text-[clamp(2rem,6vw,4.8rem)] leading-[1.04] transition-colors hover:text-rust">
+                        {l.label}
+                      </Link>
+                    )}
                   </motion.div>
                 </li>
               ))}

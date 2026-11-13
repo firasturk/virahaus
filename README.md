@@ -120,17 +120,16 @@ Every timing is a custom property on `.stage`, so they can be retuned in one pla
 
 ## Pages and sections
 
-- `/` — hero, **Motion stage** (`#about`, `motion-section.tsx`): one pinned
-  section after the GRIGOLETTO "Motion 01" template, rebuilt on the hero system.
-  Scrolling inside it switches Terrarium → Vivarium → Plants: a background
-  video per state, the category word in white Lexend Exa, copy and three product cards.
-  Timings are the template's own keyframes (intro spring, expo-out letter
-  rise, snap exit, overshoot card pop). Below 768px the three states stack.
-  **Shop** (`#shop`), **Gifting** (`#gift`), footer.
-- `/product/[slug]` — product page: sticky gallery with cursor-following zoom and
-  thumbnail crossfade, variant selector, magnetic *Add to cart*, full-bleed
-  lifestyle image, spec tiles, drag-to-scroll *You may also like*. Statically
-  generated for every product.
+- `/` — the store, top to bottom:
+  1. **Hero** (unchanged): cursor reveal, rainforest sound, featured card.
+  2. **Collections** (`#collections`): three cards, each with its studio film. A tap opens the shop on that category.
+  3. **Shop** (`#shop`): category pills (All, Terrariums, Vivariums, Plants) over a product grid. The round **+** adds the standard size to the cart.
+  4. **How to order** (`#about`): pick, send on WhatsApp, we confirm and deliver. Holds the #about anchor until the brand story is written.
+  5. **Gifting** (`#gift`): macro film, the eight rotating reassurance lines.
+  6. **Contact** (`#contact`): WhatsApp.
+- `/product/[slug]` — gallery with thumbnails, size, quantity, *Add to cart*, *Order this now on WhatsApp*, description and details, the rainforest film on vivarium pages, and four related pieces. On phones the price and button stay pinned to the bottom. Statically generated for every product.
+- Prices are in Jordanian dinar (`formatPrice` in `src/data/products.ts`). They were converted from placeholder figures and still need the real price list.
+- Any link to a category (menu, footer, breadcrumb, collection card) goes through `ShopLink` in `src/components/shop-filter.tsx`, which sets the filter and scrolls to the grid, or opens `/#shop-<slug>` from another page.
 
 Everything below the hero is drawn from the hero's own system, defined once in
 `globals.css`: the sand ground (`#c9c5bf`), ink type, rust accents (`#753319`),
@@ -161,15 +160,13 @@ feathered mask absorbs — there is no visible seam at the reveal edge.
 ### Placeholders that still need the real export
 
 The Figma assets are served from `www.figma.com`, which this build environment's
-network policy blocks, so two are still stand-ins. The fourteen product photos are the real supplied files. Each blocked file is named
+network policy blocks, so the hero icons are still redrawn. The product photos are the real supplied files, including three vivarium builds (`ref-vivarium-*.png`). Each blocked file is named
 `.PLACEHOLDER` so it is obvious in the tree:
 
-(The motion stage's own media is real: `bg-{terrarium,vivarium,plants}.mp4/.webm/.jpg` are the approved Higgsfield outputs, as are `gift-micro.*` (the gifting section background) and `vivarium-forest.*` (the lifestyle video on vivarium product pages), transcoded from the HEVC originals to H.264 and VP9 so every browser plays them.)
+(The store's films are real: `bg-{terrarium,vivarium,plants}.mp4/.webm/.jpg` (the collection cards) are the approved Higgsfield outputs, as are `gift-micro.*` (the gifting section background) and `vivarium-forest.*` (the lifestyle video on vivarium product pages), transcoded from the HEVC originals to H.264 and VP9 so every browser plays them.)
 
 | Placeholder | Figma node | What it should be |
 | --- | --- | --- |
-| `card-moss.PLACEHOLDER.jpg` | `17001:89` | The EcoStove card image. Currently a moss crop from the video. |
-| `about-terrarium.jpg` | Higgsfield job `512ad8e7` | Unused since the motion stage replaced the About section; kept for a possible return. |
 | Icon SVGs | grid / play / burger | Redrawn from the reference screenshot in `hero-banner.tsx`; approximations, not the originals. |
 
 To resolve: export the assets from Figma and upload them into `public/media/`

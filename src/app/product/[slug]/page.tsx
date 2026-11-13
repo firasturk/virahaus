@@ -14,16 +14,16 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const product = getProduct((await params).slug);
-  return product ? { title: `${product.name} — ViraHaus`, description: product.tagline } : {};
+  return product ? { title: product.name, description: product.tagline } : {};
 }
 
 export default async function Page({ params }: { params: Params }) {
   const product = getProduct((await params).slug);
   if (!product) notFound();
   return (
-    <main className="relative flex-1 bg-ink">
+    <main className="relative flex-1 bg-sand pb-[72px] lg:pb-0">
       <SiteHeader />
-      <ProductPage product={product} related={getRelated(product)} />
+      <ProductPage product={product} related={getRelated(product, 4)} />
       <SiteFooter />
     </main>
   );

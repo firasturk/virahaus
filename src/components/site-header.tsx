@@ -11,10 +11,10 @@ export default function SiteHeader() {
       <Link href="/" className="pointer-events-auto">
         <Image src="/media/VIRA-HAUS-logo.png" alt="ViraHaus" width={561} height={120} className="h-6 w-auto [filter:brightness(0.09)]" priority />
       </Link>
-      <nav className="pointer-events-auto flex items-center gap-7 text-[0.875rem] text-ink">
-        <Link href="/" className="font-bold">Home</Link>
-        <Link href="/#shop" className="text-rust">shop</Link>
-        <Link href="/#about" className="hidden text-rust sm:inline">About</Link>
+      <nav className="pointer-events-auto flex items-center gap-3 text-[0.875rem] text-ink md:gap-7">
+        <Link href="/#shop" className="hidden text-rust hover:text-ink md:inline">Shop</Link>
+        <Link href="/#about" className="hidden text-rust hover:text-ink md:inline">How to order</Link>
+        <Link href="/#contact" className="hidden text-rust hover:text-ink md:inline">Contact</Link>
         <CartButton tone="dark" />
         <MenuButton className="grid h-9 w-9 place-items-center rounded-full border border-ink/35 transition hover:border-ink/80">
           <svg viewBox="0 0 16 8" className="h-2 w-4" fill="none" stroke="currentColor" strokeWidth="1.2" aria-hidden><path d="M0 1h16M0 7h16" /></svg>
